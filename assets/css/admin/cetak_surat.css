@@ -1,0 +1,141 @@
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  a {
+    color: #5D6975;
+    text-decoration: underline;
+  }
+  
+  body {
+    position: relative;
+    width: 18cm;  
+    height: 29.7cm; 
+    margin: 0 auto; 
+    color: #001028;
+    background: #FFFFFF; 
+    font-family: Arial, sans-serif; 
+    font-size: 12px; 
+    font-family: Arial;
+  }
+  
+  header {
+    padding: 10px 0;
+    margin-bottom: 30px;
+  }
+  
+  #logo {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  #logo img {
+    width: 80px;
+  }
+  
+  h1 {
+    border-top: 1px solid  #5D6975;
+    border-bottom: 1px solid  #5D6975;
+    color: #5D6975;
+    font-size: 2.4em;
+    line-height: 1.4em;
+    font-weight: normal;
+    text-align: center;
+    margin: 0 0 20px 0;
+  }
+  
+  #project {
+    float: left;
+  }
+  
+  #project span {
+    color: #000000;
+    text-align: left;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    display: inline-block;
+    font-size: 14px;
+  }
+  
+  #project_bawah {
+    color: #000000;
+    text-align: left;
+    margin-top: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  
+  #menyetujui {
+    color: #000000;
+    text-align: right;
+    margin-top: 20px;
+    margin-left: 120px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    display: inline-block;
+    font-size: 14px;
+  }
+
+  #ttd_nama {
+    float: left;
+    margin-top: 50px;
+  }
+  
+  #ttd_nama span {
+    color: #000000;
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    display: inline-block;
+    font-size: 14px;
+  }
+
+  #hormat {
+    float: right;
+  }
+  
+  #hormat span {
+    color: #000000;
+    text-align: center;
+    margin-right: 50px;
+    margin-top: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    display: inline-block;
+    font-size: 14px;
+  }
+  
+  #company {
+    float: right;
+    text-align: right;
+  }
+  
+  #project div,
+  #company div {
+    white-space: nowrap;        
+  }
+  
+  table {
+    width: 100%;
+    border: 0px solid;
+  }
+
+  #notices .notice {
+    color: #0a0a0a;
+    font-size: 1.2em;
+  }
+  
+  footer {
+    color: #5D6975;
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #C1CED9;
+    padding: 8px 0;
+    text-align: center;
+  }
