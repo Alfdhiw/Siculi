@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 23, 2023 at 04:25 AM
+-- Generation Time: Feb 06, 2023 at 11:06 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.15
 
@@ -70,7 +70,7 @@ CREATE TABLE `tbl_admin` (
 --
 
 INSERT INTO `tbl_admin` (`kd_admin`, `nama`, `nik`, `jabatan`, `golongan`, `email`, `password`, `id_role`, `jeniskel`, `status`, `foto`) VALUES
-(1, 'Admin 1', '123456789', 'Admin', 'IV D', 'admin1@gmail.com', 'admin1', 4, 'L', 'Aktif', '230117-avatar.png');
+(1, 'Admin Siculi', '3374050505004', 'Admin', 'IA', 'admin@gmail.com', 'admin', 4, 'P', 'Aktif', '230124-pngegg.png');
 
 -- --------------------------------------------------------
 
@@ -82,22 +82,32 @@ CREATE TABLE `tbl_atasan` (
   `kd_atasan` int(11) NOT NULL,
   `nama` varchar(120) NOT NULL,
   `nik` varchar(120) NOT NULL,
+  `masuk_kerja` date DEFAULT NULL,
   `jabatan` varchar(120) NOT NULL,
   `golongan` varchar(120) NOT NULL,
+  `atasan` int(11) DEFAULT NULL,
   `email` varchar(120) NOT NULL,
   `password` varchar(120) NOT NULL,
+  `telp` varchar(120) NOT NULL,
   `id_role` int(11) NOT NULL,
   `jeniskel` char(11) NOT NULL,
   `status` varchar(120) NOT NULL,
-  `foto` varchar(120) NOT NULL
+  `foto` varchar(120) NOT NULL,
+  `sisa_cuti` int(11) NOT NULL,
+  `tgl_masuk` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbl_atasan`
 --
 
-INSERT INTO `tbl_atasan` (`kd_atasan`, `nama`, `nik`, `jabatan`, `golongan`, `email`, `password`, `id_role`, `jeniskel`, `status`, `foto`) VALUES
-(1, 'Joko Handoyo P', '1234567890', 'PENGELOLA SISTEM DAN JARINGAN SUB BAG PERENCANAAN, TI DAN PELAPORAN', 'IV A', 'jokop@gmail.com', '12345', 5, 'L', 'Aktif', '230123-221227-WhatsApp_Image_2022-11-17_at_07_51_41.jpg');
+INSERT INTO `tbl_atasan` (`kd_atasan`, `nama`, `nik`, `masuk_kerja`, `jabatan`, `golongan`, `atasan`, `email`, `password`, `telp`, `id_role`, `jeniskel`, `status`, `foto`, `sisa_cuti`, `tgl_masuk`) VALUES
+(1, 'Arif', '12345678', '2023-02-06', 'KASUBBAG KEPEGAWAIAN DAN ORTALA PENGADILAN NEGERI SEMARANG', 'II B', 2, 'arif@gmail.com', '12345', '0897556655645', 5, 'L', 'Aktif', 'default.jpg', 12, NULL),
+(2, 'Sultan', '123456789', '2023-02-06', 'KABAG UMUM PENGADILAN NEGERI SEMARANG', 'II B', 3, 'sultan@gmail.com', '12345', '0897556655645', 5, 'L', 'Aktif', 'default.jpg', 12, NULL),
+(3, 'Sekretaris', '1234567890', '2023-02-06', 'SEKRETARIS', 'II D', 4, 'sekretaris@gmail.com', '12345', '0897556655645', 5, 'P', 'Aktif', 'default.jpg', 12, NULL),
+(4, 'Ketua', '12223221232', '2023-02-06', 'KETUA', 'I A', 0, 'ketuaatasan@gmail.com', '12345', '0897556655645', 5, 'L', 'Aktif', 'default.jpg', 12, NULL),
+(5, 'Susi', '337407020445', '2023-02-06', 'KASUBBAG TATA USAHA DAN KEUANGAN PENGADILAN NEGERI SEMARANG', 'IV A', 2, 'susi@gmail.com', '12345', '0897556655645', 5, 'P', 'Aktif', 'default.jpg', 12, NULL),
+(6, 'Ari', '44554433445656', '2023-02-06', 'KASUBBAG PERENCANAAN, TI DAN PELAPORAN PENGADILAN NEGERI SEMARANG', 'III D', 2, 'ari@gmail.com', '12345', '0895544345', 5, 'L', 'Cuti', 'default.jpg', 11, '2023-02-10');
 
 -- --------------------------------------------------------
 
@@ -108,23 +118,25 @@ INSERT INTO `tbl_atasan` (`kd_atasan`, `nama`, `nik`, `jabatan`, `golongan`, `em
 CREATE TABLE `tbl_cuti` (
   `id` int(11) NOT NULL,
   `id_karyawan` int(11) NOT NULL,
-  `kepegawaian` int(11) NOT NULL,
+  `atasan` int(11) NOT NULL,
   `tgl_cuti` date DEFAULT NULL,
   `jenis_cuti` varchar(50) NOT NULL DEFAULT '0',
   `jumlah_cuti` varchar(50) NOT NULL DEFAULT '0',
   `keperluan` varchar(256) NOT NULL DEFAULT '0',
+  `alamat` varchar(250) NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT '0',
   `tgl_masuk` date NOT NULL,
-  `surat` varchar(120) NOT NULL
+  `surat` varchar(120) DEFAULT NULL,
+  `tgl_upload` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_cuti`
 --
 
-INSERT INTO `tbl_cuti` (`id`, `id_karyawan`, `kepegawaian`, `tgl_cuti`, `jenis_cuti`, `jumlah_cuti`, `keperluan`, `status`, `tgl_masuk`, `surat`) VALUES
-(51, 7, 1, '2023-01-15', 'Cuti Tahunan', '10', 'jjk', 'Approved', '2023-01-20', '230121-102-Article_Text-190-1-10-201712271.pdf'),
-(52, 7, 1, '2023-01-22', 'Cuti Tahunan', '10', 'tes', 'Process Ketua', '2023-01-24', '230122-ELS-20-Januari-2023.pdf');
+INSERT INTO `tbl_cuti` (`id`, `id_karyawan`, `atasan`, `tgl_cuti`, `jenis_cuti`, `jumlah_cuti`, `keperluan`, `alamat`, `status`, `tgl_masuk`, `surat`, `tgl_upload`) VALUES
+(67, 16, 1, '2023-02-05', 'Cuti Khusus', '12', 'tes', 'tes', 'Disetujui', '2023-02-06', NULL, '2023-02-05'),
+(69, 6, 2, '2023-02-06', 'Cuti Khusus', '12', 'libur dulu ', 'lamper tengah', 'Ditangguhkan', '2023-02-10', NULL, '2023-02-06');
 
 -- --------------------------------------------------------
 
@@ -153,7 +165,9 @@ INSERT INTO `tbl_departement` (`id`, `dept`) VALUES
 (14, 'IV A'),
 (15, 'IV B'),
 (16, 'IV C'),
-(17, 'IV D');
+(17, 'IV D'),
+(18, 'I A'),
+(19, 'V D');
 
 -- --------------------------------------------------------
 
@@ -166,18 +180,22 @@ CREATE TABLE `tbl_ijin` (
   `id_karyawan` int(11) NOT NULL,
   `atasan` int(11) NOT NULL,
   `waktu_pergi` time NOT NULL,
-  `waktu_pulang` time NOT NULL,
+  `waktu_pulang` time DEFAULT NULL,
   `keperluan` varchar(250) NOT NULL,
-  `tgl_ijin` varchar(120) NOT NULL,
-  `status` varchar(120) NOT NULL
+  `tgl_ijin` date DEFAULT NULL,
+  `status` varchar(120) NOT NULL,
+  `jenis` varchar(120) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbl_ijin`
 --
 
-INSERT INTO `tbl_ijin` (`id`, `id_karyawan`, `atasan`, `waktu_pergi`, `waktu_pulang`, `keperluan`, `tgl_ijin`, `status`) VALUES
-(10, 7, 1, '06:39:00', '08:39:00', 'tes', '09 January 2023', 'Approved');
+INSERT INTO `tbl_ijin` (`id`, `id_karyawan`, `atasan`, `waktu_pergi`, `waktu_pulang`, `keperluan`, `tgl_ijin`, `status`, `jenis`) VALUES
+(24, 16, 1, '13:48:00', '14:49:00', 'tes', '2023-02-06', 'Disetujui', 'Normal'),
+(25, 16, 1, '14:50:00', NULL, 'tes', '2023-02-06', 'Disetujui', 'Cepat'),
+(26, 1, 2, '16:39:00', '17:39:00', 'tes atasan', '2023-02-06', 'Disetujui', 'Normal'),
+(27, 1, 2, '18:40:00', NULL, 'sholat magrib', '2023-02-06', 'Disetujui', 'Cepat');
 
 -- --------------------------------------------------------
 
@@ -201,7 +219,7 @@ INSERT INTO `tbl_jabatan` (`id`, `jabatan`) VALUES
 (7, 'PENGADMINISTRASI PERPUSTAKAAN SUB BAG TATA USAHA DAN KEUANGAN'),
 (8, 'PENGELOLA SISTEM DAN JARINGAN SUB BAG PERENCANAAN, TI DAN PELAPORAN'),
 (9, 'STAF SUB BAG KEPEGAWAIAN DAN ORTALA'),
-(10, 'HAKIM'),
+(10, 'Hakim'),
 (11, 'Hakim ADHOC'),
 (12, 'HAKIM ADHOC PHI '),
 (13, 'HAKIM ADHOC TIPIKOR'),
@@ -221,9 +239,7 @@ INSERT INTO `tbl_jabatan` (`id`, `jabatan`) VALUES
 (27, 'ANALIS PERKARA PERADILAN PANITERA MUDA NIAGA'),
 (28, 'PENGADMINISTRASI PERKARA'),
 (29, 'PENGADMINISTRASI PERSURATAN SUB BAG TATA USAHA DAN KEUANGAN'),
-(30, 'JURU SITA'),
-(31, 'JURU SITA PENGGANTI'),
-(32, 'PANITERA PENGGANTI');
+(30, 'JURU SITA');
 
 -- --------------------------------------------------------
 
@@ -244,7 +260,9 @@ INSERT INTO `tbl_jenis_cuti` (`id`, `jenis`) VALUES
 (1, 'Cuti Tahunan'),
 (2, 'Cuti Khusus'),
 (4, 'Cuti Melahirkan'),
-(5, 'Cuti di Luar Tanggungan Negara');
+(5, 'Cuti di Luar Tanggungan Negara'),
+(6, 'Cuti Sakit'),
+(7, 'Cuti Besar');
 
 -- --------------------------------------------------------
 
@@ -265,7 +283,8 @@ CREATE TABLE `tbl_karyawan` (
   `alamat` varchar(255) DEFAULT NULL,
   `telp` varchar(50) DEFAULT NULL,
   `atasan` int(11) NOT NULL,
-  `kepegawaian` int(11) NOT NULL,
+  `jabatan` varchar(120) NOT NULL,
+  `golongan` varchar(120) NOT NULL,
   `sisa_cuti` int(3) DEFAULT NULL,
   `tgl_masuk` date DEFAULT NULL,
   `status` varchar(20) NOT NULL
@@ -275,8 +294,8 @@ CREATE TABLE `tbl_karyawan` (
 -- Dumping data for table `tbl_karyawan`
 --
 
-INSERT INTO `tbl_karyawan` (`id`, `nik`, `nama`, `id_role`, `foto`, `masuk_kerja`, `jenis_kelamin`, `email`, `password`, `alamat`, `telp`, `atasan`, `kepegawaian`, `sisa_cuti`, `tgl_masuk`, `status`) VALUES
-(7, '3324062208840001', 'DEAN ARGANI, S.H', 3, '221227-juli.jpg', '2023-01-20', 'L', 'dean@gmail.com', '12345', 'bandung', '08345261738', 1, 1, 11, '0000-00-00', 'Aktif');
+INSERT INTO `tbl_karyawan` (`id`, `nik`, `nama`, `id_role`, `foto`, `masuk_kerja`, `jenis_kelamin`, `email`, `password`, `alamat`, `telp`, `atasan`, `jabatan`, `golongan`, `sisa_cuti`, `tgl_masuk`, `status`) VALUES
+(16, '1234567890', 'tes1', 3, '230205-selfi.jpeg', '2020-02-05', 'L', 'tes@gmail.com', '12345', 'lamper', '123456789', 1, 'KASUBBAG KEPEGAWAIAN DAN ORTALA PENGADILAN NEGERI SEMARANG', 'III B', 11, '0000-00-00', 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -297,13 +316,6 @@ CREATE TABLE `tbl_kepegawaian` (
   `status` varchar(120) NOT NULL,
   `foto` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_kepegawaian`
---
-
-INSERT INTO `tbl_kepegawaian` (`kd_kepegawaian`, `nama`, `nik`, `jabatan`, `golongan`, `email`, `password`, `id_role`, `jeniskel`, `status`, `foto`) VALUES
-(1, 'HERLIA ASRI FITRIANI, S.T', '19840702 200904 2 007', 'PENGELOLA SISTEM DAN JARINGAN SUB BAG PERENCANAAN, TI DAN PELAPORAN', 'IV A', 'herlia@gmail.com', '12345678', 2, 'P', 'Aktif', '221227-DSC0283-copy.jpg');
 
 -- --------------------------------------------------------
 
@@ -330,7 +342,7 @@ CREATE TABLE `tbl_ketua` (
 --
 
 INSERT INTO `tbl_ketua` (`kd_ketua`, `nama`, `nik`, `jabatan`, `golongan`, `email`, `password`, `id_role`, `jeniskel`, `status`, `foto`) VALUES
-(1, 'RIZA FAUZIA, S.H., C.N.', '19650326 199103 1 001', 'KETUA', 'IV D', 'ketua@gmail.com', '12345678', 1, 'L', 'Aktif', '221227-riza-fauzi.jpg');
+(1, 'RIZA FAUZIA, S.H.', '19650326 199103 1 001', 'KETUA', 'IV D', 'ketua@gmail.com', '12345', 1, 'L', 'Aktif', '221227-riza-fauzi.jpg');
 
 -- --------------------------------------------------------
 
@@ -441,31 +453,31 @@ ALTER TABLE `tbl_admin`
 -- AUTO_INCREMENT for table `tbl_atasan`
 --
 ALTER TABLE `tbl_atasan`
-  MODIFY `kd_atasan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `kd_atasan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tbl_cuti`
 --
 ALTER TABLE `tbl_cuti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `tbl_departement`
 --
 ALTER TABLE `tbl_departement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tbl_ijin`
 --
 ALTER TABLE `tbl_ijin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `tbl_jabatan`
 --
 ALTER TABLE `tbl_jabatan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `tbl_jenis_cuti`
@@ -477,13 +489,13 @@ ALTER TABLE `tbl_jenis_cuti`
 -- AUTO_INCREMENT for table `tbl_karyawan`
 --
 ALTER TABLE `tbl_karyawan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tbl_kepegawaian`
 --
 ALTER TABLE `tbl_kepegawaian`
-  MODIFY `kd_kepegawaian` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `kd_kepegawaian` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbl_ketua`

@@ -48,6 +48,51 @@
                                                                         echo '<span class="badge text-ligth bg-success"><span style="font-size:15px;">Aktif</span></span>';
                                                                     } else if ($karyawan['status'] == 'Cuti') {
                                                                         echo '<span class="badge text-light bg-warning"><span style="font-size:15px;">Cuti</span></span>';
+                                                                    } else if ($karyawan['status'] == 'Proses') {
+                                                                        echo '<span class="badge text-light bg-success"><span style="font-size:15px;">Aktif</span></span>';
+                                                                    } else {
+                                                                        echo '<span class="badge bg-danger"><span style="font-size:15px;">Tidak Aktif</span></span>';
+                                                                    }
+                                                                    ?></b></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-users"></i> Data Karyawan Atasan</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered datakaratas" id="datakaratas" width="100%" cellspacing="0">
+                            <thead class="thead-dark text-center">
+                                <tr>
+                                    <th>NIP</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>Jabatan</th>
+                                    <th>Golongan</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($karyawanatas as $karyawanatas) : ?>
+                                    <tr>
+                                        <td class="text-center"><a href="<?= base_url('atasan/detail_atasan/' . $karyawanatas['kd_atasan'])  ?>"><b><?= $karyawanatas['nik']; ?></b> <i class="fa-solid fa-eye"></i></a></td>
+                                        <td class="text-center"><b><?= $karyawanatas['nama']; ?></b></td>
+                                        <td class="text-center"><b><?= $karyawanatas['email']; ?></b></td>
+                                        <td class="text-center"><b><?= $karyawanatas['jabatan']; ?></b></td>
+                                        <td class="text-center"><b><?= $karyawanatas['golongan'] ?></b></td>
+                                        <td class="text-center"><b><?php if ($karyawanatas['status'] == 'Aktif') {
+                                                                        echo '<span class="badge text-ligth bg-success"><span style="font-size:15px;">Aktif</span></span>';
+                                                                    } else if ($karyawanatas['status'] == 'Cuti') {
+                                                                        echo '<span class="badge text-light bg-warning"><span style="font-size:15px;">Cuti</span></span>';
+                                                                    } else if ($karyawanatas['status'] == 'Proses') {
+                                                                        echo '<span class="badge text-light bg-success"><span style="font-size:15px;">Aktif</span></span>';
                                                                     } else {
                                                                         echo '<span class="badge bg-danger"><span style="font-size:15px;">Tidak Aktif</span></span>';
                                                                     }

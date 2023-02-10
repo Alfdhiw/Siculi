@@ -68,6 +68,8 @@
                                                 echo '<span class="badge text-ligth bg-success"><span style="font-size:15px;">Aktif</span></span>';
                                             } else if ($pegawai['status'] == 'Cuti') {
                                                 echo '<span class="badge text-light bg-danger"><span style="font-size:15px;">Cuti</span></span>';
+                                            } else if ($pegawai['status'] == 'Proses') {
+                                                echo '<span class="badge text-light bg-success"><span style="font-size:15px;">Aktif</span></span>';
                                             } else {
                                                 echo '<span class="badge bg-warning"><span style="font-size:15px;">Tidak Aktif</span></span>';
                                             }

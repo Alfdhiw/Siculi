@@ -7,7 +7,7 @@ class Detail_model extends CI_Model
 
     public function getDataPegawai($kode_id)
     {
-        $query = "SELECT k. *, p.golongan, p.jabatan from tbl_kepegawaian p, tbl_karyawan k where p.kd_kepegawaian = k.atasan and k.id = '$kode_id'";
+        $query = "SELECT k. *, p.nama as nama_atasan from tbl_atasan p, tbl_karyawan k where p.kd_atasan = k.atasan and k.id = '$kode_id'";
         return $this->db->query($query)->row_array();
     }
 
@@ -23,7 +23,7 @@ class Detail_model extends CI_Model
 
     public function getPegawai()
     {
-        $query = "SELECT k. *, p.golongan, p.jabatan, p.nama AS nama_kepegawaian, p.kd_kepegawaian from tbl_kepegawaian p, tbl_karyawan k where p.kd_kepegawaian = k.atasan";
+        $query = "SELECT k.id, k.nik, k.nama, k.email, k.status, a.jabatan, a.golongan from tbl_atasan a, tbl_karyawan k where k.atasan = a.kd_atasan";
         return $this->db->query($query)->result_array();
     }
 
@@ -51,7 +51,8 @@ class Detail_model extends CI_Model
 
     public function getDept()
     {
-        return $this->db->get('tbl_departement')->result_array();
+        $query = "SELECT d.* from tbl_departement d order by d.dept asc";
+        return $this->db->query($query)->result_array();
     }
 
     public function deleteKaryawan($id)
@@ -67,5 +68,17 @@ class Detail_model extends CI_Model
     public function getKetua()
     {
         return $this->db->get('tbl_ketua')->row_array();
+    }
+
+    public function getAllAtasanById($id_atasan)
+    {
+        $query = "SELECT * from tbl_atasan where tbl_atasan.kd_atasan = $id_atasan";
+        return $this->db->query($query)->row_array();
+    }
+
+    public function getAllCutiById($id)
+    {
+        $query = "SELECT a.nama, a.nik, c.alamat, a.masuk_kerja, a.telp, a.jabatan,a.golongan, a.atasan, a.sisa_cuti, c.id as id_cuti, c.jenis_cuti, c.tgl_cuti, c.tgl_masuk, c.keperluan, c.status from tbl_atasan a, tbl_cuti c where a.kd_atasan = c.id_karyawan and c.id = $id";
+        return $this->db->query($query)->row_array();
     }
 }

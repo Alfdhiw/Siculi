@@ -10,39 +10,99 @@ class Dashboard_model extends CI_Model
         return $cuti;
     }
 
+    public function countAllIjin()
+    {
+        $cuti = $this->db->get('tbl_ijin')->num_rows();
+        return $cuti;
+    }
+
     public function countAllApproved()
     {
-        $approved = $this->db->get_where('tbl_cuti', ['status' => 'Approved'])->num_rows();
+        $approved = $this->db->get_where('tbl_cuti', ['status' => 'Disetujui'])->num_rows();
+        return $approved;
+    }
+
+    public function countAllApprovedIjin()
+    {
+        $approved = $this->db->get_where('tbl_ijin', ['status' => 'Disetujui'])->num_rows();
         return $approved;
     }
 
     public function countAllReject()
     {
-        $reject = $this->db->get_where('tbl_cuti', ['status' => 'Reject'])->num_rows();
+        $reject = $this->db->get_where('tbl_cuti', ['status' => 'Ditolak'])->num_rows();
+        return $reject;
+    }
+
+    public function countAllRejectIjin()
+    {
+        $reject = $this->db->get_where('tbl_ijin', ['status' => 'Ditolak'])->num_rows();
         return $reject;
     }
 
     public function countAllProcess()
     {
-        $reject = $this->db->get_where('tbl_cuti', ['status' => 'Process Ketua'])->num_rows();
+        $reject = $this->db->get_where('tbl_cuti', ['status' => 'Proses Ketua'])->num_rows();
         return $reject;
     }
 
-    public function getAllCuti()
+    public function countAllProcessIjin()
     {
-        $query = "SELECT k.nama, k.nik, c.* from tbl_cuti c, tbl_karyawan k where c.id_karyawan = k.id";
+        $reject = $this->db->get_where('tbl_ijin', ['status' => 'Proses'])->num_rows();
+        return $reject;
+    }
+
+    public function countAllTangguh()
+    {
+        $reject = $this->db->get_where('tbl_cuti', ['status' => 'Ditangguhkan'])->num_rows();
+        return $reject;
+    }
+
+    public function getAllCuti($from = 0, $to = 0)
+    {
+        $query = "SELECT k.nama, k.nik, c.* from tbl_cuti c, tbl_karyawan k where k.id = c.id_karyawan and c.tgl_upload BETWEEN '" . $from . "' and '" . $to . "'";
         return $this->db->query($query)->result_array();
     }
 
-    public function getAllIjin()
+    public function getAllCutiAtasan($from = 0, $to = 0)
     {
-        $query = "SELECT k.nama, k.nik, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status, i.id_karyawan from tbl_karyawan k, tbl_ijin i where i.id_karyawan = k.id ";
+        $query = "SELECT k.nama, k.nik, c.* from tbl_cuti c, tbl_atasan k where k.kd_atasan = c.id_karyawan and c.tgl_upload BETWEEN '" . $from . "' and '" . $to . "'";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllIjin($from = 0, $to = 0)
+    {
+        $query = "SELECT k.nama, k.nik, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status, i.id_karyawan, i.jenis, i.tgl_ijin from tbl_karyawan k, tbl_ijin i where i.id_karyawan = k.id and i.tgl_ijin BETWEEN '" . $from . "' and '" . $to . "'";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllIjinAtasan($from = 0, $to = 0)
+    {
+        $query = "SELECT k.nama, k.nik, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status, i.id_karyawan, i.jenis, i.tgl_ijin from tbl_atasan k, tbl_ijin i where i.id_karyawan = k.kd_atasan and i.tgl_ijin BETWEEN '" . $from . "' and '" . $to . "'";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllCutiHome()
+    {
+        $query = "SELECT k.nama, k.nik, c.* from tbl_cuti c, tbl_karyawan k where c.id_karyawan = k.id ORDER BY c.id desc";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllCutiHomeAtas()
+    {
+        $query = "SELECT k.nama, k.nik, c.* from tbl_cuti c, tbl_atasan k where c.id_karyawan = k.kd_atasan ORDER BY c.id desc";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllIjinHome()
+    {
+        $query = "SELECT k.nama, k.nik, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status, i.id_karyawan, i.jenis from tbl_karyawan k, tbl_ijin i where i.id_karyawan = k.id ";
         return $this->db->query($query)->result_array();
     }
 
     public function getAllCutiByProses()
     {
-        $query = "SELECT k.email,k.nama, k.nik, c.* from tbl_karyawan k, tbl_cuti c where c.id_karyawan = k.id and c.status = 'Process Ketua' ";
+        $query = "SELECT k.email,k.nama, k.nik, c.* from tbl_karyawan k, tbl_cuti c where c.id_karyawan = k.id and c.status = 'Proses Ketua' order by c.id ";
         return $this->db->query($query)->result_array();
     }
 
@@ -116,7 +176,7 @@ class Dashboard_model extends CI_Model
 
         $config['upload_path']          = './assets/data/ketua/profil/';
 
-        $config['allowed_types']        = 'gif|jpg|png';
+        $config['allowed_types']        = 'gif|jpg|png|jpeg';
 
         $config['file_name']            = $date . '-' . $_FILES['foto']['name'];
 

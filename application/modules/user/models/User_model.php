@@ -25,9 +25,21 @@ class User_model extends CI_Model
         return $this->db->get_where('tbl_kepegawaian')->row_array();
     }
 
-    public function getSangkarBurung($id)
+    public function getAtasanIjin($id)
     {
-        $query = "SELECT k.id, k.nik, k.nama, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status from tbl_karyawan k, tbl_ijin i where k.id = i.id_karyawan and k.id = '$id' ORDER BY i.id DESC";
+        $query = "SELECT k.atasan, a.kd_atasan from tbl_karyawan k, tbl_atasan a where k.atasan = a.kd_atasan and k.id = '$id'";
+        return $this->db->query($query)->row_array();
+    }
+
+    public function getKepegawaianIjin($id)
+    {
+        $query = "SELECT k.kepegawaian from tbl_karyawan k, tbl_kepegawaian a where k.kepegawaian = a.kd_kepegawaian and k.id = '$id'";
+        return $this->db->query($query)->row_array();
+    }
+
+    public function getIjin($id)
+    {
+        $query = "SELECT k.id, k.nik, k.nama, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status, i.jenis from tbl_karyawan k, tbl_ijin i, tbl_atasan a where k.id = i.id_karyawan and k.atasan = a.kd_atasan and k.id = '$id' ORDER BY i.id DESC";
         return $this->db->query($query)->result_array();
     }
 
@@ -37,33 +49,74 @@ class User_model extends CI_Model
         return $this->db->query($query)->row_array();
     }
 
-    public function countAllApproved($nik)
+    public function countAllIjin($id)
     {
-        $query = "SELECT k.nama, k.nik, c.* from tbl_karyawan k, tbl_cuti c where c.id_karyawan = k.id and c.status = 'Approved' and k.nik ='$nik'";
+        $query = "SELECT k.nama, k.nik, c.* from tbl_karyawan k, tbl_ijin c where c.id_karyawan = k.id and c.id_karyawan ='$id'";
         return $this->db->query($query)->num_rows();
     }
 
-    public function countAllReject($nik)
+    public function countAllApproved($id)
     {
-        $query = "SELECT k.nama, k.nik, c.* from tbl_karyawan k, tbl_cuti c where c.status = 'Reject' and k.nik ='$nik'";
+        $query = "SELECT k.nama, k.nik, c.* from tbl_karyawan k, tbl_cuti c where c.id_karyawan = k.id and c.status = 'Disetujui' and c.id_karyawan ='$id'";
         return $this->db->query($query)->num_rows();
     }
 
-    public function countAllProcess($nik)
+    public function countAllApprovedIjin($id)
     {
-        $query = "SELECT k.nama, k.nik, c.* from tbl_karyawan k, tbl_cuti c where c.status = 'Process' and k.nik ='$nik'";
+        $query = "SELECT k.nama, k.nik, c.* from tbl_karyawan k, tbl_ijin c where c.id_karyawan = k.id and c.status = 'Disetujui' and c.id_karyawan ='$id'";
         return $this->db->query($query)->num_rows();
     }
 
-    public function getAllCuti($nik)
+    public function countAllReject($id)
     {
-        $query = "SELECT k.nama, k.nik, c.* from tbl_karyawan k, tbl_cuti c where k.id = c.id_karyawan and k.nik = '$nik'";
+        $query = "SELECT k.nama, k.nik, c.* from tbl_karyawan k, tbl_cuti c where c.id_karyawan = k.id and c.status = 'Ditolak' and c.id_karyawan ='$id'";
+        return $this->db->query($query)->num_rows();
+    }
+
+    public function countAllRejectIjin($id)
+    {
+        $query = "SELECT k.nama, k.nik, c.* from tbl_karyawan k, tbl_ijin c where c.id_karyawan = k.id and c.status = 'Ditolak' and c.id_karyawan ='$id'";
+        return $this->db->query($query)->num_rows();
+    }
+
+    public function countAllProcess($id)
+    {
+        $query = "SELECT k.nama, k.nik, c.* from tbl_karyawan k, tbl_cuti c where  c.id_karyawan = k.id and c.status = 'Proses Ketua' and c.id_karyawan ='$id'";
+        return $this->db->query($query)->num_rows();
+    }
+
+    public function countAllProcessIjin($id)
+    {
+        $query = "SELECT k.nama, k.nik, c.* from tbl_karyawan k, tbl_ijin c where  c.id_karyawan = k.id and c.status = 'Proses' and c.id_karyawan ='$id'";
+        return $this->db->query($query)->num_rows();
+    }
+
+    public function countAllTangguh($id)
+    {
+        $query = "SELECT k.nama, k.nik, c.* from tbl_karyawan k, tbl_cuti c where  c.id_karyawan = k.id and c.status = 'Ditangguhkan' and c.id_karyawan ='$id'";
+        return $this->db->query($query)->num_rows();
+    }
+
+    public function getAllCuti($id)
+    {
+        $query = "SELECT k.nama, k.nik, c.* from tbl_karyawan k, tbl_cuti c where k.id = c.id_karyawan and c.id_karyawan = '$id' order by c.id DESC";
+        return $this->db->query($query)->result_array();
+    }
+    public function getAllIjin($id)
+    {
+        $query = "SELECT k.nama, k.nik, c.* from tbl_karyawan k, tbl_ijin c where k.id = c.id_karyawan and c.id_karyawan = '$id' order by c.id DESC";
         return $this->db->query($query)->result_array();
     }
 
     public function getAllCutiById($id)
     {
-        $query = "SELECT k.nama, k.nik, k.alamat, p.jabatan,p.golongan, k.sisa_cuti, c.jenis_cuti, c.tgl_cuti, c.tgl_masuk from tbl_karyawan k, tbl_kepegawaian p, tbl_cuti c where k.id = c.id_karyawan and k.atasan = p.kd_kepegawaian and c.id_karyawan = $id";
+        $query = "SELECT k.nama, k.nik, c.alamat, k.masuk_kerja, k.telp, k.jabatan,k.golongan, p.nama as nama_atasan, p.nik as nik_atasan,k.sisa_cuti, c.id as id_cuti, c.jenis_cuti, c.tgl_cuti, c.tgl_masuk, c.keperluan, c.status from tbl_karyawan k, tbl_atasan p, tbl_cuti c where k.id = c.id_karyawan and k.atasan = p.kd_atasan and c.id = $id";
+        return $this->db->query($query)->row_array();
+    }
+
+    public function getAllIjinById($id)
+    {
+        $query = "SELECT k.nama, k.nik, k.alamat, k.masuk_kerja, k.telp, p.jabatan,p.golongan, p.nama as nama_atasan, p.nik as nik_atasan,k.sisa_cuti, c.id as id_ijin, c.jenis, c.waktu_pergi, c.waktu_pulang, c.keperluan, c.status, c.tgl_ijin from tbl_karyawan k, tbl_atasan p, tbl_ijin c where k.id = c.id_karyawan and k.atasan = p.kd_atasan and c.id = $id";
         return $this->db->query($query)->row_array();
     }
 
@@ -80,7 +133,7 @@ class User_model extends CI_Model
 
     public function getProfile($id)
     {
-        $query = "SELECT k.*, a.jabatan, a.golongan from tbl_karyawan k, tbl_atasan a where k.atasan = a.kd_atasan and id = '$id'";
+        $query = "SELECT k.* from tbl_karyawan k where id = '$id'";
         return $this->db->query($query)->row_array();
     }
 
@@ -118,7 +171,7 @@ class User_model extends CI_Model
 
         $config['upload_path']          = './assets/data/karyawan/profil/';
 
-        $config['allowed_types']        = 'gif|jpg|png';
+        $config['allowed_types']        = 'gif|jpg|png|jpeg';
 
         $config['file_name']            = $date . '-' . $_FILES['foto']['name'];
 

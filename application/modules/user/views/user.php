@@ -16,6 +16,8 @@ if ($foto['status'] == 'Aktif') {
     require_once('user_aktif.php');
 } elseif ($foto['status'] == 'Cuti') {
     require_once('penentuan.php');
+} elseif ($foto['status'] == 'Proses') {
+    require_once('user_aktif.php');
 }
 ?>
 

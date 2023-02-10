@@ -66,20 +66,89 @@
         $('.dataproses').DataTable({
             "pageLength": 5,
             order: [
-                [0, 'desc']
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.dataprosesijin').DataTable({
+            "pageLength": 5,
+            order: [
+                [0, '']
             ]
         });
     });
     $(document).ready(function() {
         $('.datakar').DataTable({
+            "pageLength": 20,
+            order: [
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.datapeg').DataTable({
             "pageLength": 10,
             order: [
-                [1, 'desc']
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.dataatasan').DataTable({
+            "pageLength": 10,
+            order: [
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.datagol').DataTable({
+            "pageLength": 10,
+            order: [
+                [1, 'asc']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.datajabatan').DataTable({
+            "pageLength": 10,
+            order: [
+                [1, 'asc']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.datacutikar').DataTable({
+            "pageLength": 10,
+            order: [
+                [1, 'asc']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.datacutiatas').DataTable({
+            "pageLength": 10,
+            order: [
+                [1, 'asc']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.dataijin').DataTable({
+            "pageLength": 10,
+            order: [
+                [1, 'asc']
             ]
         });
     });
 </script>
-
+<!-- <script type="text/javascript">
+    function price() {
+        var tes = document.getElementById("atasanx").value;
+        document.getElementById("atas").value = tes;
+    }
+</script> -->
 </body>
 
 </html>

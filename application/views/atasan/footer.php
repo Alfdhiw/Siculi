@@ -66,7 +66,15 @@
         $('.dataproses').DataTable({
             "pageLength": 5,
             order: [
-                [0, 'desc']
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.datasetuju').DataTable({
+            "pageLength": 10,
+            order: [
+                [0, '']
             ]
         });
     });
@@ -74,11 +82,227 @@
         $('.datakar').DataTable({
             "pageLength": 10,
             order: [
-                [1, 'desc']
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.datakaratas').DataTable({
+            "pageLength": 10,
+            order: [
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.dataijin').DataTable({
+            "pageLength": 20,
+            order: [
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.datacutikar').DataTable({
+            "pageLength": 5,
+            order: [
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.datacutiatas').DataTable({
+            "pageLength": 5,
+            order: [
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.datacutix').DataTable({
+            "pageLength": 20,
+            order: [
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.datacutiy').DataTable({
+            "pageLength": 20,
+            order: [
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.dataisi').DataTable({
+            "pageLength": 20,
+            order: [
+                [0, '']
             ]
         });
     });
 </script>
+
+<script>
+    function sisa_cuti() {
+        var fname = document.getElementById('form1').status.value;
+
+        var p_sisax = document.getElementById("sisax");
+
+        var p_sisay = document.getElementById("sisay");
+
+        var p_cuti = document.getElementById("cuti");
+
+        var p_masuk = document.getElementById("masuk");
+
+        var p_profily = document.getElementById("status_profily");
+
+        var p_profil = document.getElementById("status_profil");
+
+        if (fname == "Proses Ketua") {
+            p_sisax.disabled = false;
+            p_sisay.disabled = true;
+            p_cuti.readOnly = true;
+            p_masuk.readOnly = true;
+            p_profil.disabled = false;
+            p_profily.disabled = true;
+        } else if (fname == "Ditolak") {
+            p_sisax.disabled = true;
+            p_sisay.disabled = false;
+            p_cuti.readOnly = true;
+            p_masuk.readOnly = true;
+            p_profil.disabled = true;
+            p_profily.disabled = false;
+        } else if (fname == "Ditangguhkan") {
+            p_sisax.disabled = false;
+            p_sisay.disabled = true;
+            p_cuti.readOnly = false;
+            p_masuk.readOnly = false;
+            p_profil.disabled = false;
+            p_profily.disabled = true;
+        } else if (fname == "Proses") {
+            p_sisax.disabled = true;
+            p_sisay.disabled = true;
+            p_cuti.readOnly = true;
+            p_masuk.readOnly = true;
+            p_profil.disabled = true;
+            p_profily.disabled = true;
+        }
+    }
+    document.getElementById('status').addEventListener('change', sisa_cuti);
+</script>
+
+<script>
+    function sisa_cutix() {
+        var fname = document.getElementById('form2').statusx.value;
+
+        var p_sisax = document.getElementById("sisax");
+
+        var p_sisay = document.getElementById("sisay");
+
+        var p_cuti = document.getElementById("cuti");
+
+        var p_masuk = document.getElementById("masukatas");
+
+        var p_profily = document.getElementById("status_profilyatas");
+
+        var p_profil = document.getElementById("status_profilatas");
+
+        if (fname == "Proses Ketua") {
+            p_sisax.disabled = false;
+            p_sisay.disabled = true;
+            p_cuti.readOnly = true;
+            p_masuk.readOnly = true;
+            p_profil.disabled = false;
+            p_profily.disabled = true;
+        } else if (fname == "Ditolak") {
+            p_sisax.disabled = true;
+            p_sisay.disabled = false;
+            p_cuti.readOnly = true;
+            p_masuk.readOnly = true;
+            p_profil.disabled = true;
+            p_profily.disabled = false;
+        } else if (fname == "Ditangguhkan") {
+            p_sisax.disabled = false;
+            p_sisay.disabled = true;
+            p_cuti.readOnly = false;
+            p_masuk.readOnly = false;
+            p_profil.disabled = false;
+            p_profily.disabled = true;
+        } else if (fname == "Proses") {
+            p_sisax.disabled = true;
+            p_sisay.disabled = true;
+            p_cuti.readOnly = true;
+            p_masuk.readOnly = true;
+            p_profil.disabled = true;
+            p_profily.disabled = true;
+        }
+    }
+    document.getElementById('statusx').addEventListener('change', sisa_cutix);
+</script>
+
+<script>
+    function myFunction() {
+        document.getElementById("tes1").submit();
+    }
+</script>
+
+<script>
+    function myFunctionAtasan() {
+        document.getElementById("tes3").submit();
+    }
+</script>
+
+<script>
+    function myFunctionAtasanDewe() {
+        document.getElementById("tes4").submit();
+    }
+</script>
+
+<script>
+    function myFunctionx() {
+        document.getElementById("tes2").submit();
+    }
+</script>
+
+<script>
+    function myFunctiony() {
+        document.getElementById("tes5").submit();
+    }
+</script>
+
+<script>
+    function myFunctionu() {
+        document.getElementById("tes6").submit();
+    }
+</script>
+
+<script>
+    function jenis_cuti() {
+        var fname = document.getElementById('form2').jenis.value;
+
+        var p_kontainer = document.getElementById("surat");
+
+        if (fname == "Cuti Sakit") {
+            p_kontainer.disabled = false;;
+        } else if (fname == "Cuti Besar") {
+            p_kontainer.disabled = false;
+        } else if (fname == "Cuti Tahunan") {
+            p_kontainer.disabled = true;
+        } else if (fname == "Cuti Tahunan") {
+            p_kontainer.disabled = true;
+        } else if (fname == "Cuti Khusus") {
+            p_kontainer.disabled = true;
+        } else if (fname == "Cuti Melahirkan") {
+            p_kontainer.disabled = true;
+        } else if (fname == "Cuti Diluar Tanggungan Negara") {
+            p_kontainer.disabled = true;
+        }
+    }
+    document.getElementById('jenis').addEventListener('change', jenis_cuti);
+</script>
+
 
 </body>
 

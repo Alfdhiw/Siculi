@@ -7,7 +7,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('admin') ?>">
                 <div class="sidebar-brand-icon">
                     <img class="rounded-circle mt-3" src="<?= base_url('assets/') ?>img/admin/logoPN.ico" alt="logo" style="height: 70px; width: 70px;">
                 </div>
@@ -49,7 +49,7 @@
             </li>
 
             <!-- Nav Item - Karyawan Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#kepegawaian" aria-expanded="true" aria-controls="kepegawaian">
                     <i class="fas fa-user-friends"></i>
                     <span>Kepegawaian</span>
@@ -60,7 +60,7 @@
                         <a class="collapse-item" href="<?= base_url('admin/tambah_kepegawaian') ?>"><b>Input Kepegawaian</b></a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Nav Item - Karyawan Collapse Menu -->
             <li class="nav-item">

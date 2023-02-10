@@ -25,7 +25,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered datakar" id="datakar" width="100%" cellspacing="0">
+                        <table class="table table-hover table-bordered datapeg" id="datapeg" width="100%" cellspacing="0">
                             <thead class="thead-dark text-center">
                                 <tr>
                                     <th>NIP</th>

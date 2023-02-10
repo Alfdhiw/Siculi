@@ -11,6 +11,7 @@
                         <i class="fas fa-hand text-danger mb-3" style="font-size: 90px;"></i>
                     </div>
                     <p class="card-text">Anda dalam masa cuti, silahkan akses kembali saat cuti berakhir</p>
+                    <a type="button" href="<?= base_url('user/cuti') ?>"><span class="card-text" style="font-size: 14px; color:#5D6975;"><i class="fa-solid fa-circle-arrow-left"></i> <u>Cetak Surat Cuti</u></span></a>
                 </div>
                 <!-- <div class="card-footer text-muted">
                     <marquee style="margin-bottom: -5px;">SISTEM INFORMASI MAGANG DPRD JAWA TENGAH</marquee>

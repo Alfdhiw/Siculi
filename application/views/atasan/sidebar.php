@@ -7,7 +7,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('atasan') ?>">
                 <div class="sidebar-brand-icon">
                     <img class="rounded-circle mt-3" src="<?= base_url('assets/') ?>img/admin/logoPN.ico" alt="logo" style="height: 70px; width: 70px;">
                 </div>
@@ -60,8 +60,14 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Data Ijin
+                Data Ijin & Cuti
             </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('atasan/cuti') ?>">
+                    <i class="fas fa-calendar"></i>
+                    <span>Data Cuti</span></a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('atasan/ijin') ?>">
@@ -74,13 +80,37 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Progress Ijin
+                Progress Ijin & Cuti
             </div>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('atasan/persetujuan_cuti') ?>">
+                    <i class="fas fa-building"></i>
+                    <span>Persetujuan Cuti</span>
+                </a>
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('atasan/persetujuan_ijin') ?>">
                     <i class="fas fa-building"></i>
                     <span>Persetujuan Ijin</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Pengajuan Ijin & Cuti
+            </div>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('atasan/pengajuan_cuti') ?>">
+                    <i class="fas fa-building"></i>
+                    <span>Pengajuan Cuti</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('atasan/ijin_keluar') ?>">
+                    <i class="fas fa-building"></i>
+                    <span>Pengajuan Ijin</span>
                 </a>
             </li>
             <!-- Divider -->

@@ -55,12 +55,6 @@
 
                         <div class="form-group col-md-12">
 
-                            <label for="nik">NIK</label>
-
-                            <input id="nik" class="form-control shadow" type="text" name="nik" value="<?= $profil['nik'] ?>" readonly />
-                        </div>
-                        <div class="form-group col-md-12">
-
                             <label for="jabatan">Jabatan</label>
 
                             <input id="jabatan" class="form-control shadow" type="text" name="jabatan" value="<?= $profil['jabatan'] ?>" readonly />
@@ -69,7 +63,18 @@
 
                             <label for="golongan">Golongan</label>
 
-                            <input id="golongan" class="form-control shadow" type="text" name="golongan" value="<?= $profil['golongan'] ?>" readonly />
+                            <select name="golongan" id="golongan" class="custom-select">
+                                <option value="<?= $profil['golongan']; ?>"><?= $profil['golongan'] ?></option>
+                                <?php foreach ($golongan as $gl) : ?>
+                                    <option value="<?= $gl['dept']; ?>"><?= $gl['dept']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+
+                            <label for="nik">NIK</label>
+
+                            <input id="nik" class="form-control shadow" type="text" name="nik" value="<?= $profil['nik'] ?>" />
                         </div>
                     </div>
 

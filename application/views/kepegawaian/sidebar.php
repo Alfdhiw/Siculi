@@ -7,7 +7,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('kepegawaian') ?>">
                 <div class="sidebar-brand-icon">
                     <img class="rounded-circle mt-3" src="<?= base_url('assets/') ?>img/admin/logoPN.ico" alt="logo" style="height: 70px; width: 70px;">
                 </div>
@@ -60,7 +60,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Data Cuti
+                Data Cuti & Ijin
             </div>
 
             <!-- Nav Item - Charts -->
@@ -69,21 +69,28 @@
                     <i class="fas fa-calendar"></i>
                     <span>Data Cuti</span></a>
             </li>
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('kepegawaian/ijin') ?>">
+                    <i class="fas fa-building"></i>
+                    <span>Data Ijin</span></a>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <!-- <div class="sidebar-heading">
                 Progress Cuti
-            </div>
+            </div> -->
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('kepegawaian/persetujuan_cuti') ?>">
                     <i class="fas fa-check"></i>
                     <span>Persetujuan Cuti</span>
                 </a>
-            </li>
+            </li> -->
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 

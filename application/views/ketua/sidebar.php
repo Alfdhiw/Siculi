@@ -7,7 +7,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('ketua') ?>">
                 <div class="sidebar-brand-icon">
                     <img class="rounded-circle mt-3" src="<?= base_url('assets/') ?>img/admin/logoPN.ico" alt="logo" style="height: 70px; width: 70px;">
                 </div>
@@ -85,7 +85,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Progress Cuti
+                Progress Cuti & Ijin
             </div>
 
             <!-- Nav Item - Charts -->
@@ -96,9 +96,15 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('ketua/ijin') ?>">
+                    <i class="fas fa-building"></i>
+                    <span>Data Ijin</span></a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('ketua/persetujuan_cuti') ?>">
                     <i class="fas fa-check"></i>
-                    <span>Persetujuan Ijin</span></a>
+                    <span>Persetujuan Cuti</span></a>
             </li>
 
             <!-- Divider -->

@@ -10,33 +10,117 @@ class Dashboard_model extends CI_Model
         return $this->db->query($query)->num_rows();
     }
 
-    public function countAllApproved($id)
+    public function countAllCuti($id)
     {
-        $query = "SELECT * from tbl_ijin where atasan = $id and status = 'Approved'";
+        $query = "SELECT * from tbl_cuti where atasan = $id ";
         return $this->db->query($query)->num_rows();
     }
 
-    public function countAllReject()
+    public function countAllApproved($id)
     {
-        $reject = $this->db->get_where('tbl_ijin', ['status' => 'Reject'])->num_rows();
-        return $reject;
+        $query = "SELECT * from tbl_ijin where atasan = $id and status = 'Disetujui'";
+        return $this->db->query($query)->num_rows();
+    }
+
+    public function countAllApprovedCuti($id)
+    {
+        $query = "SELECT * from tbl_cuti where atasan = $id and status = 'Disetujui'";
+        return $this->db->query($query)->num_rows();
+    }
+
+    public function countAllReject($id)
+    {
+        $query = "SELECT * from tbl_ijin where atasan = $id and status = 'Ditolak'";
+        return $this->db->query($query)->num_rows();
+    }
+
+    public function countAllRejectCuti($id)
+    {
+        $query = "SELECT * from tbl_cuti where atasan = $id and status = 'Ditolak'";
+        return $this->db->query($query)->num_rows();
     }
 
     public function countAllProcess()
     {
-        $reject = $this->db->get_where('tbl_ijin', ['status' => 'Process'])->num_rows();
+        $reject = $this->db->get_where('tbl_ijin', ['status' => 'Proses'])->num_rows();
         return $reject;
     }
 
-    public function getAllCuti($id)
+    public function countAllTangguh()
     {
-        $query = "SELECT k.nama, k.nik, c.* from tbl_cuti c, tbl_karyawan k where k.id = c.id_karyawan and  c.atasan = $id";
+        $reject = $this->db->get_where('tbl_cuti', ['status' => 'Ditangguhkan'])->num_rows();
+        return $reject;
+    }
+
+    public function getAllCuti($id = 0, $from = 0, $to = 0)
+    {
+        $query = "SELECT k.nama, k.nik, c.* from tbl_cuti c, tbl_karyawan k where k.id = c.id_karyawan and  c.atasan = $id and c.tgl_upload BETWEEN '" . $from . "' and '" . $to . "'";
         return $this->db->query($query)->result_array();
     }
 
-    public function getAllIjin($id)
+    public function getAllCutiAtasan($id = 0, $from = 0, $to = 0)
     {
-        $query = "SELECT k.nama, k.nik, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status, i.id_karyawan from tbl_karyawan k, tbl_ijin i where i.id_karyawan = k.id and i.atasan = $id ";
+        $query = "SELECT k.nama, k.nik, c.* from tbl_cuti c, tbl_atasan k where k.kd_atasan = c.id_karyawan and  c.atasan = $id and c.tgl_upload BETWEEN '" . $from . "' and '" . $to . "'";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllCutiAtasanDewe($id = 0, $from = 0, $to = 0)
+    {
+        $query = "SELECT k.nama, k.nik, c.* from tbl_cuti c, tbl_atasan k where k.kd_atasan = c.id_karyawan and  c.id_karyawan = $id and c.tgl_upload BETWEEN '" . $from . "' and '" . $to . "'";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllIjin($id = 0, $from = 0, $to = 0)
+    {
+        $query = "SELECT k.nama, k.nik, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status, i.id_karyawan, i.jenis, i.tgl_ijin from tbl_karyawan k, tbl_ijin i where i.id_karyawan = k.id and i.atasan = $id and i.tgl_ijin BETWEEN '" . $from . "' and '" . $to . "'";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllIjinAtasan($id = 0, $from = 0, $to = 0)
+    {
+        $query = "SELECT k.nama, k.nik, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status, i.id_karyawan, i.jenis, i.tgl_ijin from tbl_atasan k, tbl_ijin i where i.id_karyawan = k.kd_atasan and i.atasan = $id and i.tgl_ijin BETWEEN '" . $from . "' and '" . $to . "'";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllIjinDewe($id = 0, $from = 0, $to = 0)
+    {
+        $query = "SELECT k.nama, k.nik, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status, i.id_karyawan, i.jenis, i.tgl_ijin from tbl_atasan k, tbl_ijin i where i.id_karyawan = k.kd_atasan and i.id_karyawan = $id and i.tgl_ijin BETWEEN '" . $from . "' and '" . $to . "'";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllCutiHome($id)
+    {
+        $query = "SELECT k.nama, k.nik, c.* from tbl_cuti c, tbl_karyawan k where c.id_karyawan = k.id and c.atasan = $id";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllCutiHomeAtas($id)
+    {
+        $query = "SELECT a.nama, a.nik, c.* from tbl_cuti c, tbl_atasan a where c.id_karyawan = a.kd_atasan and c.atasan = $id";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllCutiHomeAtasDewe($id)
+    {
+        $query = "SELECT a.nama, a.nik, c.* from tbl_cuti c, tbl_atasan a where c.id_karyawan = a.kd_atasan and c.id_karyawan = $id";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllIjinHome($id)
+    {
+        $query = "SELECT k.nama, k.nik, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status, i.id_karyawan, i.jenis from tbl_karyawan k, tbl_ijin i where i.id_karyawan = k.id and i.atasan = $id ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllIjinHomeAtasan($id)
+    {
+        $query = "SELECT k.nama, k.nik, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status, i.id_karyawan, i.jenis from tbl_atasan k, tbl_ijin i where i.id_karyawan = k.kd_atasan and i.atasan = $id ";
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllIjinHomeDewe($id)
+    {
+        $query = "SELECT k.nama, k.nik, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status, i.id_karyawan, i.jenis from tbl_atasan k, tbl_ijin i where i.id_karyawan = k.kd_atasan and i.id_karyawan = $id ";
         return $this->db->query($query)->result_array();
     }
 
@@ -128,7 +212,7 @@ class Dashboard_model extends CI_Model
 
         $config['upload_path']          = './assets/data/atasan/profil/';
 
-        $config['allowed_types']        = 'gif|jpg|png';
+        $config['allowed_types']        = 'gif|jpg|png|jpeg';
 
         $config['file_name']            = $date . '-' . $_FILES['foto']['name'];
 

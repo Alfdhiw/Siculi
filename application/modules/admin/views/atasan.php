@@ -25,7 +25,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered datakar" id="datakar" width="100%" cellspacing="0">
+                        <table class="table table-hover table-bordered dataatasan" id="dataatasan" width="100%" cellspacing="0">
                             <thead class="thead-dark text-center">
                                 <tr>
                                     <th>NIP</th>
@@ -89,6 +89,15 @@
                                                                                                                                                     echo 'value="Perempuan"';
                                                                                                                                                 }
                                                                                                                                                 ?> readonly>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <label for="atasan" class="form-label">Atasan</label>
+                                                                        <select name="atasan" id="atasan" class="custom-select">
+                                                                            <option value="<?= $atasan['atasan'] ?>">Pilih</option>
+                                                                            <?php foreach ($atasanx as $ats) : ?>
+                                                                                <option value="<?= $ats['kd_atasan']; ?>"><?= $ats['nama']; ?></option>
+                                                                            <?php endforeach; ?>
+                                                                        </select>
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <label for="jabatan" class="form-label">Jabatan</label>

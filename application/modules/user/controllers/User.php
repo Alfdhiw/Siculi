@@ -28,10 +28,16 @@ class User extends CI_Controller
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->user->getFotoUser($id);
         $data['cuti'] = $this->user->countAllCuti($id);
-        $data['approved'] = $this->user->countAllApproved($nik);
-        $data['reject'] = $this->user->countAllReject($nik);
-        $data['process'] = $this->user->countAllProcess($nik);
-        $data['datacuti'] = $this->user->getAllCuti($nik);
+        $data['ijin'] = $this->user->countAllIjin($id);
+        $data['approved'] = $this->user->countAllApproved($id);
+        $data['approved_ijin'] = $this->user->countAllApprovedIjin($id);
+        $data['reject'] = $this->user->countAllReject($id);
+        $data['reject_ijin'] = $this->user->countAllRejectIjin($id);
+        $data['process'] = $this->user->countAllProcess($id);
+        $data['tangguh'] = $this->user->countAllTangguh($id);
+        $data['process_ijin'] = $this->user->countAllProcessIjin($id);
+        $data['datacuti'] = $this->user->getAllCuti($id);
+        $data['dataijin'] = $this->user->getAllIjin($id);
         $this->load->view('user/header.php', $data);
         $this->load->view('user/sidebar.php', $data);
         $this->load->view('user/topbar.php', $data);
@@ -45,11 +51,12 @@ class User extends CI_Controller
         $data['role'] = $this->session->userdata('role_id');
         $data['nik'] = $this->session->userdata('nik');
         $nik = $data['nik'];
+        $data['con'] = mysqli_connect('localhost', 'root', '', $this->db->database);
         $data['userid'] = $this->session->userdata('userid');
         $id = $data['userid'];
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->user->getFotoUser($id);
-        $data['datacuti'] = $this->user->getAllCuti($nik);
+        $data['datacuti'] = $this->user->getAllCuti($id);
         $this->load->view('user/header', $data);
         $this->load->view('user/sidebar', $data);
         $this->load->view('user/topbar', $data);
@@ -87,8 +94,8 @@ class User extends CI_Controller
     {
         $data['title'] = 'Form Pengajuan Cuti';
         $data['role'] = $this->session->userdata('role_id');
-        $data['nik'] = $this->session->userdata('nik');
-        $nik = $data['nik'];
+        $id_karyawan = $this->input->post('id');
+        $proses = $this->input->post('proses');
         $data['userid'] = $this->session->userdata('userid');
         $id = $data['userid'];
         $data['session'] = $this->session->userdata('nama');
@@ -127,24 +134,51 @@ class User extends CI_Controller
                         'tgl_masuk' => $this->input->post('tgl_masuk'),
                         'jenis_cuti' => $this->input->post('jenis_cuti'),
                         'keperluan' => $this->input->post('keperluan'),
+                        'alamat' => $this->input->post('alamat'),
                         'status' => $this->input->post('status'),
-                        'kepegawaian' => $this->input->post('kepegawaian'),
+                        'atasan' => $this->input->post('atasan'),
                         'jumlah_cuti' => $this->input->post('sisa'),
                         'surat' => $this->surat->data("file_name"),
+                        'tgl_upload' => $this->input->post('date'),
                     );
 
                     $this->db->insert('tbl_cuti', $data);
                     $this->session->set_flashdata('flash', '<div class="alert alert-success" role="alert">Pengajuan Cuti Telah Dikirim, Silahkan Menunggu!</div>');
+                    $this->kurangcuti($id_karyawan, $proses);
                     redirect($_SERVER['HTTP_REFERER']);
                 } else {
                     $this->session->set_flashdata('flash', '<div class="alert alert-danger" role="alert">Pengajuan Cuti Gagal, silahkan ulangi pengisian form!</div>');
                     redirect($_SERVER['HTTP_REFERER']);
                 }
             } else {
-                $this->session->set_flashdata('flash', '<div class="alert alert-danger" role="alert">Surat Belum Diisi!</div>');
+                $data =  array(
+                    'id_karyawan' => $this->input->post('id_karyawan'),
+                    'tgl_cuti' => $this->input->post('tgl_cuti'),
+                    'tgl_masuk' => $this->input->post('tgl_masuk'),
+                    'jenis_cuti' => $this->input->post('jenis_cuti'),
+                    'keperluan' => $this->input->post('keperluan'),
+                    'alamat' => $this->input->post('alamat'),
+                    'status' => $this->input->post('status'),
+                    'atasan' => $this->input->post('atasan'),
+                    'jumlah_cuti' => $this->input->post('sisa'),
+                    'surat' => null,
+                    'tgl_upload' => $this->input->post('date'),
+                );
+
+                $this->db->insert('tbl_cuti', $data);
+                $this->session->set_flashdata('flash', '<div class="alert alert-success" role="alert">Pengajuan Cuti Telah Dikirim, Silahkan Menunggu!</div>');
+                $this->kurangcuti($id_karyawan, $proses);
                 redirect($_SERVER['HTTP_REFERER']);
             }
         }
+    }
+
+    public function kurangcuti($id_karyawan, $proses)
+    {
+        $this->db->set('status', $proses);
+        $this->db->where('id', $id_karyawan);
+        $this->db->update('tbl_karyawan');
+        redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function edit_profil()
@@ -206,8 +240,85 @@ class User extends CI_Controller
         //orientasi paper potrait / landscape
         $orientation = "portrait";
         $data['date'] = date('d F Y');
+        $data['tahun'] = date('Y');
+        $data['tahun_data'] = date('Y', strtotime($data['datacuti']['masuk_kerja']));
+        $data['bulan'] = date('n');
+        $data['bulan_data'] = date('n', strtotime($data['datacuti']['masuk_kerja']));
+        $data['day'] = date('d');
+        $data['day_data'] =  date('d', strtotime($data['datacuti']['tgl_cuti']));
+        $data['day_datax'] =  date('d', strtotime($data['datacuti']['tgl_masuk']));
+        $data['hasil'] = $data['tahun'] - $data['tahun_data'];
+        $data['hasilx'] = $data['bulan_data'] - $data['bulan'];
+        $data['hasily'] = $data['day_datax'] - $data['day_data'];
+        $data['date_id'] = date('j / n / y');
         $html = $this->load->view('user/cetak_cuti', $data, true);
         // $this->load->view('user/cetak_cuti', $data);
+        $this->dompdfgenerator->generate($html, $file_pdf, $paper, $orientation);
+        // $this->load->view('invoice', $data);
+    }
+
+    public function cetak_ijin()
+    {
+        $kode_nilai = $this->uri->segment(3);
+        $nik = $this->session->userdata('nik');
+        $id = $this->session->userdata('userid');
+        $data['cuti'] = $this->user->getFotoUser($id);
+        $data['dataijin'] = $this->user->getAllIjinById($kode_nilai);
+        $data['ketua'] = $this->user->getKetua();
+
+        $data['title'] = 'Surat Ijin';
+        // filename dari pdf ketika didownload
+        $file_pdf = 'Surat Cuti';
+        // setting paper
+        $paper = 'A4';
+        //orientasi paper potrait / landscape
+        $orientation = "portrait";
+        $data['date'] = date('d F Y');
+        $data['tahun'] = date('Y');
+        $data['tahun_data'] = date('Y', strtotime($data['dataijin']['masuk_kerja']));
+        $data['bulan'] = date('n');
+        $data['bulan_data'] = date('n', strtotime($data['dataijin']['masuk_kerja']));
+        $data['day'] = date('d');
+        $data['day_data'] =  date('d F Y', strtotime($data['dataijin']['tgl_ijin']));
+        $data['hari_data'] =  date('l', strtotime($data['dataijin']['tgl_ijin']));
+        $data['pergi'] = date('H.i', strtotime($data['dataijin']['waktu_pergi']));
+        $data['masuk'] = date('H.i', strtotime($data['dataijin']['waktu_pulang']));
+        $data['date_id'] = date('j / n / y');
+        $html = $this->load->view('user/cetak_ijin', $data, true);
+        // $this->load->view('user/cetak_ijin', $data);
+        $this->dompdfgenerator->generate($html, $file_pdf, $paper, $orientation);
+        // $this->load->view('invoice', $data);
+    }
+
+    public function cetak_cepat()
+    {
+        $kode_nilai = $this->uri->segment(3);
+        $nik = $this->session->userdata('nik');
+        $id = $this->session->userdata('userid');
+        $data['cuti'] = $this->user->getFotoUser($id);
+        $data['dataijin'] = $this->user->getAllIjinById($kode_nilai);
+        $data['ketua'] = $this->user->getKetua();
+
+        $data['title'] = 'Surat Ijin Cepat';
+        // filename dari pdf ketika didownload
+        $file_pdf = 'Surat Cuti';
+        // setting paper
+        $paper = 'A4';
+        //orientasi paper potrait / landscape
+        $orientation = "portrait";
+        $data['date'] = date('d F Y');
+        $data['tahun'] = date('Y');
+        $data['tahun_data'] = date('Y', strtotime($data['dataijin']['masuk_kerja']));
+        $data['bulan'] = date('n');
+        $data['bulan_data'] = date('n', strtotime($data['dataijin']['masuk_kerja']));
+        $data['day'] = date('d');
+        $data['day_data'] =  date('d F Y', strtotime($data['dataijin']['tgl_ijin']));
+        $data['hari_data'] =  date('l', strtotime($data['dataijin']['tgl_ijin']));
+        $data['pergi'] = date('H.i', strtotime($data['dataijin']['waktu_pergi']));
+        $data['masuk'] = date('H.i', strtotime($data['dataijin']['waktu_pulang']));
+        $data['date_id'] = date('j / n / y');
+        $html = $this->load->view('user/cetak_cepat', $data, true);
+        // $this->load->view('user/cetak_ijin', $data);
         $this->dompdfgenerator->generate($html, $file_pdf, $paper, $orientation);
         // $this->load->view('invoice', $data);
     }
@@ -220,7 +331,8 @@ class User extends CI_Controller
         $data['userid'] = $this->session->userdata('userid');
         $id = $data['userid'];
         $data['session'] = $this->session->userdata('nama');
-        $data['nik'] = $this->user->getSangkarBurung($id);
+        $data['con'] = mysqli_connect('localhost', 'root', '', $this->db->database);
+        $data['nik'] = $this->user->getIjin($id);
         $data['foto'] = $this->user->getFotoUser($id);
         $data['date'] = date('d F Y');
         $this->load->view('user/header', $data);
@@ -232,20 +344,39 @@ class User extends CI_Controller
 
     public function tambah_ijin()
     {
-        $data['title'] = 'Form Ijin Karyawan';
+        $data['title'] = 'Form Ijin Kantor';
 
         // $nik = $data['nik'];
         $data['userid'] = $this->session->userdata('userid');
         $id = $data['userid'];
         $data['session'] = $this->session->userdata('nama');
-        $data['nik'] = $this->user->getSangkarBurung($id);
+        // $data['nik'] = $this->user->getSangkarBurung($id);
         $data['foto'] = $this->user->getFotoUser($id);
-        $data['atasan'] = $this->user->getAtasan($id);
+        $data['atasan'] = $this->user->getAtasanIjin($id);
         $data['date'] = date('d F Y');
         $this->load->view('user/header', $data);
         $this->load->view('user/sidebar', $data);
         $this->load->view('user/topbar', $data);
         $this->load->view('user/tambah_ijin', $data);
+        $this->load->view('user/footer', $data);
+    }
+
+    public function tambah_ijincepat()
+    {
+        $data['title'] = 'Form Ijin Cepat';
+
+        // $nik = $data['nik'];
+        $data['userid'] = $this->session->userdata('userid');
+        $id = $data['userid'];
+        $data['session'] = $this->session->userdata('nama');
+        // $data['nik'] = $this->user->getSangkarBurung($id);
+        $data['foto'] = $this->user->getFotoUser($id);
+        $data['atasan'] = $this->user->getAtasanIjin($id);
+        $data['date'] = date('d F Y');
+        $this->load->view('user/header', $data);
+        $this->load->view('user/sidebar', $data);
+        $this->load->view('user/topbar', $data);
+        $this->load->view('user/tambah_ijincepat', $data);
         $this->load->view('user/footer', $data);
     }
 
@@ -258,7 +389,26 @@ class User extends CI_Controller
             'waktu_pulang' => $this->input->post('waktu_pulang'),
             'keperluan' => $this->input->post('keperluan'),
             'tgl_ijin' => $this->input->post('tgl_ijin'),
-            'status' => $this->input->post('status')
+            'status' => $this->input->post('status'),
+            'jenis' => 'Normal'
+        ];
+        $this->db->insert('tbl_ijin', $data);
+        $this->session->set_flashdata('flash', '<div class="alert alert-success" role="alert">Data ijin Berhasil Di Tambah</div>');
+        redirect('user/ijin_keluar');
+    }
+
+    public function pengajuan_ijincepat()
+    {
+        $data = [
+            'id_karyawan' => $this->input->post('id_peserta'),
+            'atasan' => $this->input->post('atasan'),
+            'waktu_pergi' => $this->input->post('waktu_pergi'),
+            'waktu_pulang' => null,
+            'keperluan' => $this->input->post('keperluan'),
+            'tgl_ijin' => $this->input->post('tgl_ijin'),
+            'status' => $this->input->post('status'),
+            'jenis' => 'Cepat'
+
         ];
         $this->db->insert('tbl_ijin', $data);
         $this->session->set_flashdata('flash', '<div class="alert alert-success" role="alert">Data ijin Berhasil Di Tambah</div>');

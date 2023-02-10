@@ -66,18 +66,62 @@
         $('.dataproses').DataTable({
             "pageLength": 5,
             order: [
-                [0, 'desc']
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.dataprosesijin').DataTable({
+            "pageLength": 5,
+            order: [
+                [0, '']
             ]
         });
     });
     $(document).ready(function() {
         $('.datakar').DataTable({
-            "pageLength": 10,
+            "pageLength": 20,
             order: [
                 [1, 'desc']
             ]
         });
     });
+    $(document).ready(function() {
+        $('.datacuti').DataTable({
+            "pageLength": 20,
+            order: [
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.dataper').DataTable({
+            "pageLength": 20,
+            order: [
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.dataijin').DataTable({
+            "pageLength": 20,
+            order: [
+                [0, '']
+            ]
+        });
+    });
+</script>
+
+<script>
+    function myFunction() {
+        document.getElementById("tes1").submit();
+    }
+</script>
+
+<script>
+    function myFunctionx() {
+        document.getElementById("tes2").submit();
+    }
 </script>
 
 </body>

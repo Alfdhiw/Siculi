@@ -10,21 +10,51 @@ class Dashboard_model extends CI_Model
         return $cuti;
     }
 
+    public function countAllIjin()
+    {
+        $ijin = $this->db->get('tbl_ijin')->num_rows();
+        return $ijin;
+    }
+
     public function countAllApproved()
     {
-        $approved = $this->db->get_where('tbl_cuti', ['status' => 'Approved'])->num_rows();
+        $approved = $this->db->get_where('tbl_cuti', ['status' => 'Disetujui'])->num_rows();
         return $approved;
+    }
+
+    public function countAllApprovedCuti()
+    {
+        $approvedcuti = $this->db->get_where('tbl_ijin', ['status' => 'Disetujui'])->num_rows();
+        return $approvedcuti;
     }
 
     public function countAllReject()
     {
-        $reject = $this->db->get_where('tbl_cuti', ['status' => 'Reject'])->num_rows();
+        $reject = $this->db->get_where('tbl_cuti', ['status' => 'Ditolak'])->num_rows();
         return $reject;
+    }
+
+    public function countAllRejectCuti()
+    {
+        $rejectcuti = $this->db->get_where('tbl_ijin', ['status' => 'Ditolak'])->num_rows();
+        return $rejectcuti;
     }
 
     public function countAllProcess()
     {
-        $reject = $this->db->get_where('tbl_cuti', ['status' => 'Process'])->num_rows();
+        $reject = $this->db->get_where('tbl_cuti', ['status' => 'Proses'])->num_rows();
+        return $reject;
+    }
+
+    public function countAllTangguh()
+    {
+        $reject = $this->db->get_where('tbl_cuti', ['status' => 'Ditangguhkan'])->num_rows();
+        return $reject;
+    }
+
+    public function countAllProcessCuti()
+    {
+        $reject = $this->db->get_where('tbl_ijin', ['status' => 'Proses'])->num_rows();
         return $reject;
     }
 
@@ -36,7 +66,7 @@ class Dashboard_model extends CI_Model
 
     public function getAllIjin()
     {
-        $query = "SELECT k.nama, k.nik,k.id, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status from tbl_karyawan k, tbl_ijin i where i.id_karyawan = k.id ";
+        $query = "SELECT k.nama, k.nik,k.id, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status, i.jenis from tbl_karyawan k, tbl_ijin i where i.id_karyawan = k.id ";
         return $this->db->query($query)->result_array();
     }
 
@@ -52,7 +82,7 @@ class Dashboard_model extends CI_Model
 
     public function getSangkarBurung()
     {
-        $query = "SELECT k.id, k.nik, k.nama, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status from tbl_karyawan k, tbl_ijin i where k.id = i.id_karyawan ORDER BY i.id DESC";
+        $query = "SELECT k.id, k.nik, k.nama, i.atasan, i.waktu_pergi, i.waktu_pulang, i.keperluan, i.tgl_ijin, i.status, i.jenis from tbl_karyawan k, tbl_ijin i where k.id = i.id_karyawan ORDER BY i.id DESC";
         return $this->db->query($query)->result_array();
     }
 
@@ -106,6 +136,10 @@ class Dashboard_model extends CI_Model
 
         $this->nama = $post["nama"];
 
+        $this->nik = $post["nik"];
+
+        $this->golongan = $post["golongan"];
+
         $this->email = $post["email"];
 
         $this->password = $post['password'];
@@ -131,7 +165,7 @@ class Dashboard_model extends CI_Model
 
         $config['upload_path']          = './assets/data/admin/profil/';
 
-        $config['allowed_types']        = 'gif|jpg|png';
+        $config['allowed_types']        = 'gif|jpg|png|jpeg';
 
         $config['file_name']            = $date . '-' . $_FILES['foto']['name'];
 

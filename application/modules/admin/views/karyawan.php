@@ -49,6 +49,8 @@
                                                                         echo '<span class="badge text-ligth bg-success"><span style="font-size:15px;">Aktif</span></span>';
                                                                     } else if ($karyawan['status'] == 'Cuti') {
                                                                         echo '<span class="badge text-light bg-warning"><span style="font-size:15px;">Cuti</span></span>';
+                                                                    } else if ($karyawan['status'] == 'Proses') {
+                                                                        echo '<span class="badge text-light bg-success"><span style="font-size:15px;">Aktif</span></span>';
                                                                     } else {
                                                                         echo '<span class="badge bg-danger"><span style="font-size:15px;">Tidak Aktif</span></span>';
                                                                     }
@@ -110,21 +112,30 @@
                                                                         <label for="alamat" class="form-label">Alamat</label>
                                                                         <textarea class="form-control" id="alamat" name="alamat" readonly><?= $karyawan['alamat'] ?></textarea>
                                                                     </div>
-                                                                    <div class="col-md-6">
-                                                                        <label for="kepegawaian" class="form-label">Kepegawaian</label>
-                                                                        <select name="kepegawaian" id="kepegawaian" class="custom-select">
-                                                                            <option value="<?= $karyawan['kepegawaian']; ?>"><?= $karyawan['nama_kepegawaian'] ?></option>
-                                                                            <?php foreach ($kepegawaian as $kp) : ?>
-                                                                                <option value="<?= $kp['kd_kepegawaian']; ?>"><?= $kp['nama']; ?></option>
-                                                                            <?php endforeach; ?>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-12">
                                                                         <label for="atasan" class="form-label">Atasan</label>
                                                                         <select name="atasan" id="atasan" class="custom-select">
                                                                             <option value="<?= $karyawan['atasan']; ?>"><?= $karyawan['nama_atasan'] ?></option>
                                                                             <?php foreach ($atasan as $kp) : ?>
                                                                                 <option value="<?= $kp['kd_atasan']; ?>"><?= $kp['nama']; ?></option>
+                                                                            <?php endforeach; ?>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <label for="jabatan" class="form-label">Jabatan</label>
+                                                                        <select name="jabatan" id="jabatan" class="custom-select">
+                                                                            <option value="<?= $karyawan['jabatan']; ?>"><?= $karyawan['jabatan'] ?></option>
+                                                                            <?php foreach ($jabatan as $jb) : ?>
+                                                                                <option value="<?= $jb['jabatan']; ?>"><?= $jb['jabatan']; ?></option>
+                                                                            <?php endforeach; ?>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <label for="golongan" class="form-label">Golongan</label>
+                                                                        <select name="golongan" id="golongan" class="custom-select">
+                                                                            <option value="<?= $karyawan['golongan']; ?>"><?= $karyawan['golongan'] ?></option>
+                                                                            <?php foreach ($golongan as $gl) : ?>
+                                                                                <option value="<?= $gl['dept']; ?>"><?= $gl['dept']; ?></option>
                                                                             <?php endforeach; ?>
                                                                         </select>
                                                                     </div>

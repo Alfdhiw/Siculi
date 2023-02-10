@@ -32,9 +32,12 @@
                 <input type="hidden" name="nik" value="<?= $foto['nik'] ?>">
                 <input type="hidden" name="nama" value="<?= $foto['nama'] ?>">
                 <input type="hidden" name="id_peserta" value="<?= $foto['id'] ?>">
-                <input type="hidden" name="tgl_ijin" value="<?= $date ?>">
-                <input type="hidden" name="atasan" value="<?= $atasan['nama'] ?>">
-                <input type="hidden" name="status" value="Process">
+                <input type="hidden" name="tgl_ijin" value="<?php
+                                                            date("Y-m-d");
+                                                            echo date("Y-m-d");
+                                                            ?>">
+                <input type="hidden" name="atasan" value="<?= $atasan['atasan'] ?>">
+                <input type="hidden" name="status" value="Proses">
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary">Kirim</button>
                 </div>

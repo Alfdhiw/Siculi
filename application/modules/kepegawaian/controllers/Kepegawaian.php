@@ -27,10 +27,16 @@ class Kepegawaian extends CI_Controller
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['cuti'] = $this->dashboard->countAllCuti($id);
+        $data['ijin'] = $this->dashboard->countAllIjin($id);
         $data['approved'] = $this->dashboard->countAllApproved($id);
+        $data['approved_ijin'] = $this->dashboard->countAllApprovedIjin($id);
         $data['reject'] = $this->dashboard->countAllReject($id);
+        $data['reject_ijin'] = $this->dashboard->countAllRejectIjin($id);
         $data['process'] = $this->dashboard->countAllProcess($id);
-        $data['datacuti'] = $this->dashboard->getAllCuti($id);
+        $data['process_ijin'] = $this->dashboard->countAllProcessIjin($id);
+        $data['tangguh'] = $this->dashboard->countAllTangguh($id);
+        $data['datacuti'] = $this->dashboard->getAllCutiHome($id);
+        $data['dataijin'] = $this->dashboard->getAllIjinHome($id);
         $this->load->view('kepegawaian/header.php', $data);
         $this->load->view('kepegawaian/sidebar.php', $data);
         $this->load->view('kepegawaian/topbar.php', $data);
@@ -331,6 +337,7 @@ class Kepegawaian extends CI_Controller
         $data['role'] = $this->session->userdata('role_id');
         $data['userid'] = $this->session->userdata('userid');
         $id = $data['userid'];
+        $data['con'] = mysqli_connect('localhost', 'root', '', $this->db->database);
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['datacuti'] = $this->dashboard->getAllCuti($id);
@@ -347,6 +354,7 @@ class Kepegawaian extends CI_Controller
         $data['role'] = $this->session->userdata('role_id');
         $data['userid'] = $this->session->userdata('userid');
         $id = $data['userid'];
+        $data['con'] = mysqli_connect('localhost', 'root', '', $this->db->database);
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['dataijin'] = $this->dashboard->getAllIjin($id);
@@ -370,6 +378,7 @@ class Kepegawaian extends CI_Controller
         $data['role'] = $this->session->userdata('role_id');
         $data['userid'] = $this->session->userdata('userid');
         $id = $data['userid'];
+        $data['con'] = mysqli_connect('localhost', 'root', '', $this->db->database);
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['datacuti'] = $this->dashboard->getAllCutiByProses($id);
@@ -437,36 +446,46 @@ class Kepegawaian extends CI_Controller
 
     public function cetak_laporan()
     {
+        $from = $this->input->post('from');
+        $to = $this->input->post('to');
         $id = $this->session->userdata('userid');
-        $data['cuti'] = $this->dashboard->getAllCuti($id);
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $data['datacuti'] = $this->dashboard->getAllCuti($id, $from, $to);
         $data['title'] = 'Laporan Cuti';
         // filename dari pdf ketika didownload
         $file_pdf = 'Laporan Cuti';
         // setting paper
         $paper = 'A4';
         //orientasi paper potrait / landscape
-        $orientation = "landscape";
+        $orientation = "potrait";
+        $data['date_id'] = date('j / n / y');
         $data['date'] = date('d F Y');
         $html = $this->load->view('kepegawaian/cetak_laporan', $data, true);
-        // $this->load->view('kepegawaian/cetak_laporan', $data);
+        // $this->load->view('atasan/cetak_laporan', $data);
         $this->dompdfgenerator->generate($html, $file_pdf, $paper, $orientation);
         // $this->load->view('invoice', $data);
     }
 
     public function cetak_ijin()
     {
+        $from = $this->input->post('from');
+        $to = $this->input->post('to');
         $id = $this->session->userdata('userid');
-        $data['cuti'] = $this->dashboard->getAllIjin($id);
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $data['dataijin'] = $this->dashboard->getAllIjin($id, $from, $to);
         $data['title'] = 'Laporan Ijin';
         // filename dari pdf ketika didownload
         $file_pdf = 'Laporan Ijin';
         // setting paper
         $paper = 'A4';
         //orientasi paper potrait / landscape
-        $orientation = "landscape";
+        $orientation = "potrait";
+        $data['date_id'] = date('j / n / y');
         $data['date'] = date('d F Y');
-        $html = $this->load->view('kepegawaian/cetak_ijin', $data, true);
-        // $this->load->view('kepegawaian/cetak_ijin', $data);
+        $html = $this->load->view('kepegawaian/cetak_laporanijin', $data, true);
+        // $this->load->view('atasan/cetak_ijin', $data);
         $this->dompdfgenerator->generate($html, $file_pdf, $paper, $orientation);
         // $this->load->view('invoice', $data);
     }

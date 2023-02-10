@@ -56,6 +56,7 @@
 
 <!-- Page level plugins -->
 <script src="<?= base_url() ?>assets/vendor/admin/chart.js/Chart.min.js"></script>
+<script src="<?= base_url('assets/') ?>js/admin/sweetalert2.min.js"></script>
 
 <!-- Page level custom scripts -->
 <script src="<?= base_url() ?>assets/js/admin/demo/chart-area-demo.js"></script>
@@ -71,14 +72,75 @@
         });
     });
     $(document).ready(function() {
-        $('.datakar').DataTable({
-            "pageLength": 10,
+        $('.dataprosesijin').DataTable({
+            "pageLength": 5,
             order: [
-                [1, 'desc']
+                [0, 'desc']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.datacuti').DataTable({
+            "pageLength": 20,
+            order: [
+                [0, '']
+            ]
+        });
+    });
+    $(document).ready(function() {
+        $('.dataijin').DataTable({
+            "pageLength": 20,
+            order: [
+                [0, '']
             ]
         });
     });
 </script>
+
+<!-- <script>
+    function jenis_cuti() {
+        var fname = document.getElementById('form1').jenis.value;
+
+        document.getElementById('jenis_cuti').value = fname;
+    }
+
+    document.getElementById('jenis').addEventListener('change', jenis_cuti);
+</script> -->
+
+<script>
+    function jenis_cuti() {
+        var fname = document.getElementById('form1').jenis.value;
+
+        var p_kontainer = document.getElementById("surat");
+
+        if (fname == "Cuti Sakit") {
+            p_kontainer.disabled = false;;
+        } else if (fname == "Cuti Besar") {
+            p_kontainer.disabled = false;
+        } else if (fname == "Cuti Tahunan") {
+            p_kontainer.disabled = true;
+        } else if (fname == "Cuti Tahunan") {
+            p_kontainer.disabled = true;
+        } else if (fname == "Cuti Khusus") {
+            p_kontainer.disabled = true;
+        } else if (fname == "Cuti Melahirkan") {
+            p_kontainer.disabled = true;
+        } else if (fname == "Cuti Diluar Tanggungan Negara") {
+            p_kontainer.disabled = true;
+        }
+    }
+    document.getElementById('jenis').addEventListener('change', jenis_cuti);
+</script>
+
+
+
+<!-- <script>
+    $(document).ready(function() {
+        $("#jenis").on("change", function() {
+            $("#lampiran").toggle();
+        });
+    });
+</script> -->
 
 </body>
 

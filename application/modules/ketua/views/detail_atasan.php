@@ -39,6 +39,10 @@
                                     <td><b><?php echo $atasan['email']; ?></b></td>
                                 </tr>
                                 <tr>
+                                    <td>Atasan</td>
+                                    <td><b><?php echo $nama_atasan['nama']; ?></b></td>
+                                </tr>
+                                <tr>
                                     <td>Jabatan</td>
                                     <td><b><?php echo $atasan['jabatan']; ?></b></td>
                                 </tr>

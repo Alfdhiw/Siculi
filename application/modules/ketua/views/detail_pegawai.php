@@ -44,6 +44,10 @@
                                     <td><b><?php echo $pegawai['email']; ?></b></td>
                                 </tr>
                                 <tr>
+                                    <td>Atasan</td>
+                                    <td><b><?php echo $pegawai['nama_atasan']; ?></b></td>
+                                </tr>
+                                <tr>
                                     <td>Telepon</td>
                                     <td><b><?php echo $pegawai['telp']; ?></b></td>
                                 </tr>

@@ -12,6 +12,7 @@ class Ketua extends CI_Controller
         $this->load->helper(array('url', 'form'));
         $this->load->model('ketua/Dashboard_model', 'dashboard');
         $this->load->model('ketua/Detail_model', 'detail');
+        $this->load->model('user/User_model', 'user');
         $this->load->library('dompdfgenerator');
     }
 
@@ -24,10 +25,17 @@ class Ketua extends CI_Controller
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['cuti'] = $this->dashboard->countAllCuti();
+        $data['ijin'] = $this->dashboard->countAllIjin();
         $data['approved'] = $this->dashboard->countAllApproved();
+        $data['approved_ijin'] = $this->dashboard->countAllApprovedIjin();
         $data['reject'] = $this->dashboard->countAllReject();
+        $data['reject_ijin'] = $this->dashboard->countAllRejectIjin();
         $data['process'] = $this->dashboard->countAllProcess();
-        $data['datacuti'] = $this->dashboard->getAllCuti();
+        $data['process_ijin'] = $this->dashboard->countAllProcessIjin();
+        $data['tangguh'] = $this->dashboard->countAllTangguh();
+        $data['datacuti'] = $this->dashboard->getAllCutiHome();
+        $data['datacutiatas'] = $this->dashboard->getAllCutiHomeAtas();
+        $data['dataijin'] = $this->dashboard->getAllIjinHome();
         $this->load->view('ketua/header.php', $data);
         $this->load->view('ketua/sidebar.php', $data);
         $this->load->view('ketua/topbar.php', $data);
@@ -249,6 +257,8 @@ class Ketua extends CI_Controller
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['atasan'] = $this->detail->getDataAtasan($kode_id);
+        $id_atasan = $data['atasan']['atasan'];
+        $data['nama_atasan'] = $this->detail->getAllAtasanById($id_atasan);
         $this->load->view('ketua/header', $data);
         $this->load->view('ketua/sidebar', $data);
         $this->load->view('ketua/topbar', $data);
@@ -376,6 +386,7 @@ class Ketua extends CI_Controller
         $data['role'] = $this->session->userdata('role_id');
         $data['userid'] = $this->session->userdata('userid');
         $id = $data['userid'];
+        $data['con'] = mysqli_connect('localhost', 'root', '', $this->db->database);
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['datacuti'] = $this->dashboard->getAllCuti();
@@ -402,7 +413,8 @@ class Ketua extends CI_Controller
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['jumlah'] = $this->dashboard->countAllProcess();
-        $data['dataijin'] = $this->dashboard->getAllIjin($id);
+        $data['dataijin'] = $this->dashboard->getAllIjin();
+        $data['con'] = mysqli_connect('localhost', 'root', '', $this->db->database);
         $this->load->view('ketua/header', $data);
         $this->load->view('ketua/sidebar', $data);
         $this->load->view('ketua/topbar', $data);
@@ -416,6 +428,7 @@ class Ketua extends CI_Controller
         $data['role'] = $this->session->userdata('role_id');
         $data['userid'] = $this->session->userdata('userid');
         $id = $data['userid'];
+        $data['con'] = mysqli_connect('localhost', 'root', '', $this->db->database);
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['jumlah'] = $this->dashboard->countAllProcess();
@@ -429,29 +442,186 @@ class Ketua extends CI_Controller
 
     public function edit_persetujuan($id)
     {
+        $nik = $this->input->post('nik');
+        $sisa = $this->input->post('sisa');
+        $tgl_masuk = $this->input->post('masuk');
         $data = [
-            'status' => $this->input->post('status')
+            'status' => $this->input->post('status'),
+            'tgl_cuti' => $this->input->post('cuti'),
+            'tgl_masuk' => $this->input->post('masuk')
         ];
         $this->db->where('id', $id);
         $this->db->update('tbl_cuti', $data);
+        $this->session->set_flashdata('flash', '<div class="alert alert-success" role="alert">Data Telah Berhasil Di Edit</div>');
+        $this->editprofilstatus($nik, $sisa, $tgl_masuk);
+    }
+
+    public function edit_persetujuanatasan($id)
+    {
+        $nik = $this->input->post('nik');
+        $sisa = $this->input->post('sisa');
+        $tgl_masuk = $this->input->post('masuk');
+        $data = [
+            'status' => $this->input->post('status'),
+            'tgl_cuti' => $this->input->post('cuti'),
+            'tgl_masuk' => $this->input->post('masuk')
+        ];
+        $this->db->where('id', $id);
+        $this->db->update('tbl_cuti', $data);
+        $this->session->set_flashdata('flash', '<div class="alert alert-success" role="alert">Data Telah Berhasil Di Edit</div>');
+        $this->editprofilstatusatasan($nik, $sisa, $tgl_masuk);
+    }
+
+    public function editprofilstatus($nik, $sisa, $tgl_masuk)
+    {
+        $data = [
+            'sisa_cuti' => $sisa,
+            'status' => $this->input->post('status_profil'),
+            'tgl_masuk' => $tgl_masuk
+        ];
+        $this->db->where('nik', $nik);
+        $this->db->update('tbl_karyawan', $data);
+        $this->session->set_flashdata('flash', '<div class="alert alert-success" role="alert">Data Telah Berhasil Di Edit</div>');
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+
+    public function editprofilstatusatasan($nik, $sisa, $tgl_masuk)
+    {
+        $data = [
+            'sisa_cuti' => $sisa,
+            'status' => $this->input->post('status_profil'),
+            'tgl_masuk' => $tgl_masuk
+        ];
+        $this->db->where('nik', $nik);
+        $this->db->update('tbl_atasan', $data);
         $this->session->set_flashdata('flash', '<div class="alert alert-success" role="alert">Data Telah Berhasil Di Edit</div>');
         redirect($_SERVER['HTTP_REFERER']);
     }
 
     public function cetak_laporan()
     {
+        $from = $this->input->post('from');
+        $to = $this->input->post('to');
         $id = $this->session->userdata('userid');
-        $data['cuti'] = $this->dashboard->getAllCuti($id);
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $data['datacuti'] = $this->dashboard->getAllCuti($from, $to);
         $data['title'] = 'Laporan Cuti';
         // filename dari pdf ketika didownload
         $file_pdf = 'Laporan Cuti';
         // setting paper
         $paper = 'A4';
         //orientasi paper potrait / landscape
-        $orientation = "landscape";
+        $orientation = "potrait";
+        $data['date_id'] = date('j / n / y');
         $data['date'] = date('d F Y');
         $html = $this->load->view('ketua/cetak_laporan', $data, true);
-        // $this->load->view('kepegawaian/cetak_laporan', $data);
+        // $this->load->view('atasan/cetak_laporan', $data);
+        $this->dompdfgenerator->generate($html, $file_pdf, $paper, $orientation);
+        // $this->load->view('invoice', $data);
+    }
+
+    public function cetak_laporanatasan()
+    {
+        $from = $this->input->post('from');
+        $to = $this->input->post('to');
+        $id = $this->session->userdata('userid');
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $data['datacuti'] = $this->dashboard->getAllCuti($from, $to);
+        $data['title'] = 'Laporan Cuti';
+        // filename dari pdf ketika didownload
+        $file_pdf = 'Laporan Cuti';
+        // setting paper
+        $paper = 'A4';
+        //orientasi paper potrait / landscape
+        $orientation = "potrait";
+        $data['date_id'] = date('j / n / y');
+        $data['date'] = date('d F Y');
+        $html = $this->load->view('ketua/cetak_laporan', $data, true);
+        // $this->load->view('atasan/cetak_laporan', $data);
+        $this->dompdfgenerator->generate($html, $file_pdf, $paper, $orientation);
+        // $this->load->view('invoice', $data);
+    }
+
+    public function cetak_cuti()
+    {
+        $kode_nilai = $this->uri->segment(3);
+        $nik = $this->session->userdata('nik');
+        $id = $this->session->userdata('userid');
+        $data['cuti'] = $this->user->getFotoUser($id);
+        $data['datacuti'] = $this->detail->getAllCutiById($kode_nilai);
+        $id_atasan = $data['datacuti']['atasan'];
+        $data['atasan'] = $this->detail->getAllAtasanById($id_atasan);
+        $data['ketua'] = $this->user->getKetua();
+
+        $data['title'] = 'Surat Cuti Atasan';
+        // filename dari pdf ketika didownload
+        $file_pdf = 'Surat Cuti Atasan';
+        // setting paper
+        $paper = 'A4';
+        //orientasi paper potrait / landscape
+        $orientation = "portrait";
+        $data['date'] = date('d F Y');
+        $data['tahun'] = date('Y');
+        $data['tahun_data'] = date('Y', strtotime($data['datacuti']['masuk_kerja']));
+        $data['bulan'] = date('n');
+        $data['bulan_data'] = date('n', strtotime($data['datacuti']['masuk_kerja']));
+        $data['day'] = date('d');
+        $data['day_data'] =  date('d', strtotime($data['datacuti']['tgl_cuti']));
+        $data['day_datax'] =  date('d', strtotime($data['datacuti']['tgl_masuk']));
+        $data['hasil'] = $data['tahun'] - $data['tahun_data'];
+        $data['hasilx'] = $data['bulan_data'] - $data['bulan'];
+        $data['hasily'] = $data['day_datax'] - $data['day_data'];
+        $data['date_id'] = date('j / n / y');
+        $html = $this->load->view('atasan/cetak_cuti', $data, true);
+        // $this->load->view('user/cetak_cuti', $data);
+        $this->dompdfgenerator->generate($html, $file_pdf, $paper, $orientation);
+        // $this->load->view('invoice', $data);
+    }
+
+    public function cetak_ijin()
+    {
+        $from = $this->input->post('from');
+        $to = $this->input->post('to');
+        $id = $this->session->userdata('userid');
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $data['dataijin'] = $this->dashboard->getAllIjin($from, $to);
+        $data['title'] = 'Laporan Ijin';
+        // filename dari pdf ketika didownload
+        $file_pdf = 'Laporan Ijin';
+        // setting paper
+        $paper = 'A4';
+        //orientasi paper potrait / landscape
+        $orientation = "potrait";
+        $data['date_id'] = date('j / n / y');
+        $data['date'] = date('d F Y');
+        $html = $this->load->view('ketua/cetak_laporanijin', $data, true);
+        // $this->load->view('atasan/cetak_ijin', $data);
+        $this->dompdfgenerator->generate($html, $file_pdf, $paper, $orientation);
+        // $this->load->view('invoice', $data);
+    }
+
+    public function cetak_ijinatasan()
+    {
+        $from = $this->input->post('from');
+        $to = $this->input->post('to');
+        $id = $this->session->userdata('userid');
+        $data['from'] = $from;
+        $data['to'] = $to;
+        $data['dataijin'] = $this->dashboard->getAllIjinAtasan($from, $to);
+        $data['title'] = 'Laporan Ijin';
+        // filename dari pdf ketika didownload
+        $file_pdf = 'Laporan Ijin';
+        // setting paper
+        $paper = 'A4';
+        //orientasi paper potrait / landscape
+        $orientation = "potrait";
+        $data['date_id'] = date('j / n / y');
+        $data['date'] = date('d F Y');
+        $html = $this->load->view('ketua/cetak_laporanijin', $data, true);
+        // $this->load->view('atasan/cetak_ijin', $data);
         $this->dompdfgenerator->generate($html, $file_pdf, $paper, $orientation);
         // $this->load->view('invoice', $data);
     }

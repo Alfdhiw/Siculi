@@ -70,7 +70,7 @@ class Login extends CI_Controller
                         if ($data->status == 0) {
                             $this->session->set_flashdata('message', '<div class="alert alert-danger" style="color:red;" role="alert">' . 'Akun anda belum aktif. Silahkan menunggu' . '</div>');
                             redirect('login');
-                        } elseif ($data->status == 'Aktif') {
+                        } elseif ($data->status != 'Tidak Aktif') {
 
                             $this->CI->session->set_userdata('userid', $data->kode);
                             $this->CI->session->set_userdata('nama', $data->nama);
@@ -96,13 +96,16 @@ class Login extends CI_Controller
                             $this->CI->session->set_userdata('role_id', 3);
                             $this->CI->session->set_userdata('logged_in', true);
                             redirect('user');
+                        } else {
+                            $this->session->set_flashdata('message', '<div class="alert alert-danger" style="color:red;" role="alert">' . 'Akun anda diblokir. Silahkan Hubungi Admin' . '</div>');
+                            redirect('login');
                         }
                     } elseif ($data->id_role == 4) {
 
                         if ($data->status == 0) {
                             $this->session->set_flashdata('message', '<div class="alert alert-danger" style="color:red;" role="alert">' . 'Akun anda belum aktif. Silahkan menunggu' . '</div>');
                             redirect('login');
-                        } elseif ($data->status == 'Aktif') {
+                        } elseif ($data->status != 'Tidak Aktif') {
 
                             $this->CI->session->set_userdata('userid', $data->kode);
                             $this->CI->session->set_userdata('nama', $data->nama);
@@ -120,7 +123,7 @@ class Login extends CI_Controller
                         if ($data->status == 0) {
                             $this->session->set_flashdata('message', '<div class="alert alert-danger" style="color:red;" role="alert">' . 'Akun anda belum aktif. Silahkan menunggu' . '</div>');
                             redirect('login');
-                        } elseif ($data->status == 'Aktif') {
+                        } elseif ($data->status != 'Tidak Aktif') {
 
                             $this->CI->session->set_userdata('userid', $data->kode);
                             $this->CI->session->set_userdata('nama', $data->nama);

@@ -7,13 +7,13 @@ class Detail_model extends CI_Model
 
     public function getDataPegawai($kode_id)
     {
-        $query = "SELECT k.*, p.jabatan, p.golongan from tbl_karyawan k, tbl_kepegawaian p where  k.atasan = p.kd_kepegawaian and k.id = $kode_id";
+        $query = "SELECT k.*, p.jabatan, p.golongan from tbl_karyawan k, tbl_atasan p where  k.atasan = p.kd_atasan and k.id = $kode_id";
         return $this->db->query($query)->row_array();
     }
 
     public function getPegawai($id)
     {
-        $query = "SELECT k.*, p.jabatan, p.golongan from tbl_karyawan k, tbl_kepegawaian p where k.atasan = p.kd_kepegawaian and  k.atasan = $id";
+        $query = "SELECT k.*, p.jabatan, p.golongan from tbl_karyawan k, tbl_atasan p where k.atasan = p.kd_atasan and  k.kepegawaian = $id";
         return $this->db->query($query)->result_array();
     }
 

@@ -40,11 +40,11 @@
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-users"></i> Data Karyawan</h6>
+                    <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-building"></i> Data Jabatan</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered datakar" id="datakar" width="100%" cellspacing="0">
+                        <table class="table table-hover table-bordered datajabatan" id="datajabatan" width="100%" cellspacing="0">
                             <thead class="thead-dark text-center">
                                 <tr>
                                     <th>#</th>

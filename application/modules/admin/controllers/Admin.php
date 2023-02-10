@@ -27,9 +27,14 @@ class Admin extends CI_Controller
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['cuti'] = $this->dashboard->countAllCuti();
+        $data['ijin'] = $this->dashboard->countAllIjin();
         $data['approved'] = $this->dashboard->countAllApproved();
+        $data['approved_cuti'] = $this->dashboard->countAllApprovedCuti();
         $data['reject'] = $this->dashboard->countAllReject();
+        $data['reject_cuti'] = $this->dashboard->countAllRejectCuti();
         $data['process'] = $this->dashboard->countAllProcess();
+        $data['tangguh'] = $this->dashboard->countAllTangguh();
+        $data['process_cuti'] = $this->dashboard->countAllProcessCuti();
         $data['datacuti'] = $this->dashboard->getAllCuti();
         $data['dataijin'] = $this->dashboard->getAllIjin();
         $this->load->view('admin/header.php', $data);
@@ -101,7 +106,8 @@ class Admin extends CI_Controller
         $data['karyawan'] = $this->detail->getPegawai();
         $data['atasan'] = $this->detail->getAtasan();
         $data['kepegawaian'] = $this->detail->getKepegawaian();
-        $data['dept'] = $this->detail->getDept();
+        $data['golongan'] = $this->detail->getDept();
+        $data['jabatan'] = $this->detail->getJabatan();
         $this->load->view('admin/header', $data);
         $this->load->view('admin/sidebar', $data);
         $this->load->view('admin/topbar', $data);
@@ -117,8 +123,9 @@ class Admin extends CI_Controller
         $id = $data['userid'];
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
-        $data['jabatan'] = $this->detail->getAtasan();
-        $data['dept'] = $this->detail->getDept();
+        $data['atasan'] = $this->detail->getAtasan();
+        $data['jabatan'] = $this->detail->getJabatan();
+        $data['golongan'] = $this->detail->getDept();
 
         //form validation
         $this->form_validation->set_rules('nama', 'nama', 'required');
@@ -129,7 +136,6 @@ class Admin extends CI_Controller
         $this->form_validation->set_rules('jeniskel', 'jenis kelamin', 'required');
         $this->form_validation->set_rules('telp', 'telepon', 'required');
         $this->form_validation->set_rules('alamat', 'alamat', 'required');
-        $this->form_validation->set_rules('atasan', 'atasan', 'required');
         $this->form_validation->set_rules('sisa', 'sisa', 'required');
         $this->form_validation->set_rules('foto', 'foto', 'required');
 
@@ -150,6 +156,8 @@ class Admin extends CI_Controller
                 'telp' => $this->input->post('telp'),
                 'alamat' => $this->input->post('alamat'),
                 'atasan' => $this->input->post('atasan'),
+                'jabatan' => $this->input->post('jabatan'),
+                'golongan' => $this->input->post('golongan'),
                 'sisa_cuti' => $this->input->post('sisa'),
                 'id_role' => $this->input->post('id_role'),
                 'status' => 'Aktif',
@@ -165,7 +173,8 @@ class Admin extends CI_Controller
     {
         $data = [
             'atasan' => $this->input->post('atasan'),
-            'kepegawaian' => $this->input->post('kepegawaian'),
+            'jabatan' => $this->input->post('jabatan'),
+            'golongan' => $this->input->post('golongan'),
             'sisa_cuti' => $this->input->post('sisa'),
             'status' => $this->input->post('status')
         ];
@@ -223,6 +232,7 @@ class Admin extends CI_Controller
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['atasan'] = $this->detail->getAtasan();
+        $data['atasanx'] = $this->detail->getAtasan();
         $data['jabatan'] = $this->detail->getJabatan();
         $data['dept'] = $this->detail->getDept();
         $this->load->view('admin/header', $data);
@@ -249,6 +259,7 @@ class Admin extends CI_Controller
     {
         $data = [
             'golongan' => $this->input->post('departement'),
+            'atasan' => $this->input->post('atasan'),
             'jabatan' => $this->input->post('jabatan'),
             'status' => $this->input->post('status')
         ];
@@ -313,6 +324,8 @@ class Admin extends CI_Controller
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['jabatan'] = $this->detail->getJabatan();
+        $data['atasanx'] = $this->detail->getAtasan();
+        $data['kepegawaian'] = $this->detail->getKepegawaian();
         $data['dept'] = $this->detail->getDept();
 
         //form validation
@@ -337,10 +350,14 @@ class Admin extends CI_Controller
                 'nik' => $this->input->post('nik'),
                 'email' => $this->input->post('email'),
                 'password' => $this->input->post('password'),
+                'atasan' => $this->input->post('atasan'),
+                'telp' => $this->input->post('telp'),
+                'masuk_kerja' => $this->input->post('masuk'),
                 'jeniskel' => $this->input->post('jeniskel'),
                 'jabatan' => $this->input->post('jabatan'),
                 'golongan' => $this->input->post('departement'),
                 'id_role' => $this->input->post('id_role'),
+                'sisa_cuti' => $this->input->post('sisa'),
                 'status' => 'Aktif',
                 'foto' => $this->input->post('foto')
             ];
@@ -375,13 +392,15 @@ class Admin extends CI_Controller
         $id = $data['userid'];
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['profil'] = $this->dashboard->getProfile();
+        $data['golongan'] = $this->dashboard->getDept();
         // $data['pesertaall'] = $this->home->getProfileAll();
         $this->form_validation->set_rules('kd_admin', 'kd_admin', 'required');
         $this->form_validation->set_rules('nama', 'Nama', 'required');
+        $this->form_validation->set_rules('nik', 'NIP', 'required');
+        $this->form_validation->set_rules('golongan', 'Golongan', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
         $this->form_validation->set_rules('jeniskel', 'jeniskel', 'required');
-        $this->form_validation->set_rules('nik', 'nik', 'required');
         if ($this->form_validation->run()) {
             $this->dashboard->update();
             $this->session->set_flashdata('success', 'Data Profil Berhasil Diperbarui');
@@ -535,6 +554,7 @@ class Admin extends CI_Controller
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['datacuti'] = $this->dashboard->getAllCuti();
+        $data['con'] = mysqli_connect('localhost', 'root', '', $this->db->database);
         $this->load->view('admin/header', $data);
         $this->load->view('admin/sidebar', $data);
         $this->load->view('admin/topbar', $data);
@@ -579,6 +599,7 @@ class Admin extends CI_Controller
         $data['role'] = $this->session->userdata('role_id');
         $data['userid'] = $this->session->userdata('userid');
         $id = $data['userid'];
+        $data['con'] = mysqli_connect('localhost', 'root', '', $this->db->database);
         $data['session'] = $this->session->userdata('nama');
         $data['foto'] = $this->dashboard->getFotoUser($id);
         $data['jumlah'] = $this->dashboard->countAllProcess();

@@ -49,8 +49,8 @@
                     <label for="jeniskel" class="form-label">Jenis Kelamin</label>
                     <select id="jeniskel" name="jeniskel" class="form-select">
                         <option selected>- Pilih -</option>
-                        <option value="Laki-Laki">Laki-Laki</option>
-                        <option value="Perempuan">Perempuan</option>
+                        <option value="L">Laki-Laki</option>
+                        <option value="P">Perempuan</option>
                     </select>
                 </div>
                 <div class="col-md-6">
@@ -63,10 +63,28 @@
                 </div>
                 <div class="col-md-12">
                     <label for="atasan" class="form-label">Atasan</label>
-                    <select name="atasan" id="atasan" class="custom-select" required>
+                    <select name="atasan" id="atasan" class="custom-select">
                         <option value="">- Pilih - </option>
-                        <?php foreach ($jabatan as $jabatan) : ?>
-                            <option value="<?= $jabatan['kd_kepegawaian']; ?>"><?= $jabatan['nama']; ?></option>
+                        <?php foreach ($atasan as $atasan) : ?>
+                            <option value="<?= $atasan['kd_atasan']; ?>"><?= $atasan['nama']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="jabatan" class="form-label">Jabatan</label>
+                    <select name="jabatan" id="jabatan" class="custom-select" required>
+                        <option value="">- Pilih - </option>
+                        <?php foreach ($jabatan as $jb) : ?>
+                            <option value="<?= $jb['jabatan']; ?>"><?= $jb['jabatan']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="golongan" class="form-label">Golongan</label>
+                    <select name="golongan" id="golongan" class="custom-select" required>
+                        <option value="">- Pilih - </option>
+                        <?php foreach ($golongan as $gl) : ?>
+                            <option value="<?= $gl['dept']; ?>"><?= $gl['dept']; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
