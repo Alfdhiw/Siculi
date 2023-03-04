@@ -21,6 +21,14 @@
                     </select>
                 </div>
                 <div class="mb-3">
+                    <label for="sisa_cuti" class="form-label">Sisa Cuti Tahun Ini</label>
+                    <input type="number" class="form-control" id="sisa_cuti" name="sisa_cuti">
+                </div>
+                <div class="mb-3">
+                    <label for="keterangan_sisa" class="form-label">Keterangan Sisa Cuti &ensp; <b>(Optional)</b></label>
+                    <textarea class="form-control" id="keterangan_sisa" name="keterangan_sisa"></textarea>
+                </div>
+                <div class="mb-3">
                     <label for="tgl_cuti" class="form-label">Tanggal Cuti</label>
                     <input type="date" class="form-control" id="tgl_cuti" name="tgl_cuti">
                 </div>
@@ -43,14 +51,18 @@
                 </div>
                 <input type="hidden" name="id_karyawan" value="<?= $userid ?>">
                 <input type="hidden" name="atasan" value="<?= $user['atasan'] ?>">
+                <input type="text" name="sisa" value="<?= $user['sisa_cuti'] ?>">
                 <input type="hidden" name="proses" value="Proses">
-                <input type="hidden" name="sisa" value="<?= $user['sisa_cuti'] ?>">
                 <input type="hidden" name="id" value="<?= $user['id'] ?>">
                 <input type="hidden" name="status" value="Proses">
                 <input type="hidden" name="date" value="<?php
                                                         date("Y-m-d");
                                                         echo date("Y-m-d");
                                                         ?>">
+                <input type="hidden" name="tahun_sisa" value="<?php
+                                                                date("Y");
+                                                                echo date("Y");
+                                                                ?>">
                 <?php
                 if ($user['sisa_cuti'] == 0) {
                     echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#submitModal" >Submit</button>

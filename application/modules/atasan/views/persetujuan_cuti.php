@@ -142,8 +142,8 @@
                                                                         <option value="Ditangguhkan">Ditangguhkan</option>
                                                                     </select>
                                                                 </div>
-                                                                <input type="hidden" name="status_profil" value="Cuti" id="status_profil">
-                                                                <input type="hidden" name="status_profil" value="Aktif" id="status_profily">
+                                                                <input type="text" name="status_profil" value="Cuti" id="status_profil">
+                                                                <input type="text" name="status_profil" value="Aktif" id="status_profily">
                                                                 <input type="hidden" name="nik" value="<?= $d['nik'] ?>">
                                                                 <input type="hidden" name="sisa" value="<?= $d['jumlah_cuti'] - 1 ?>" id="sisax">
                                                                 <input type="hidden" name="sisa" value="<?= $d['jumlah_cuti'] ?>" id="sisay">
@@ -296,12 +296,12 @@
                                                                         <option value="Ditangguhkan">Ditangguhkan</option>
                                                                     </select>
                                                                 </div>
-                                                                <input type="text" name="status_profilatas" value="Cuti" id="status_profilatas">
-                                                                <input type="text" name="status_profilatas" value="Aktif" id="status_profilyatas">
-                                                                <input type="text" name="nikatas" value="<?= $d['nik'] ?>">
-                                                                <input type="text" name="sisaatas" value="<?= $d['jumlah_cuti'] - 1 ?>" id="sisax">
-                                                                <input type="text" name="sisaatas" value="<?= $d['jumlah_cuti'] ?>" id="sisay">
-                                                                <input type="text" name="tgl_masukatas" value="<?= $d['tgl_masuk'] ?>">
+                                                                <input type="hidden" name="status_profilatas" value="Cuti" id="status_profilatas">
+                                                                <input type="hidden" name="status_profilatas" value="Aktif" id="status_profilyatas">
+                                                                <input type="hidden" name="nikatas" value="<?= $d['nik'] ?>">
+                                                                <input type="hidden" name="sisaatas" value="<?= $d['jumlah_cuti'] - 1 ?>" id="sisax">
+                                                                <input type="hidden" name="sisaatas" value="<?= $d['jumlah_cuti'] ?>" id="sisay">
+                                                                <input type="hidden" name="tgl_masukatas" value="<?= $d['tgl_masuk'] ?>">
                                                             </div>
                                                     </div>
                                                     <div class="modal-footer">

@@ -138,6 +138,9 @@ class User extends CI_Controller
                         'status' => $this->input->post('status'),
                         'atasan' => $this->input->post('atasan'),
                         'jumlah_cuti' => $this->input->post('sisa'),
+                        'sisa_cuti' => $this->input->post('sisa_cuti'),
+                        'tahun_sisa' => $this->input->post('tahun_sisa'),
+                        'keterangan_sisa' => $this->input->post('keterangan_sisa'),
                         'surat' => $this->surat->data("file_name"),
                         'tgl_upload' => $this->input->post('date'),
                     );
@@ -161,6 +164,9 @@ class User extends CI_Controller
                     'status' => $this->input->post('status'),
                     'atasan' => $this->input->post('atasan'),
                     'jumlah_cuti' => $this->input->post('sisa'),
+                    'sisa_cuti' => $this->input->post('sisa_cuti'),
+                    'tahun_sisa' => $this->input->post('tahun_sisa'),
+                    'keterangan_sisa' => $this->input->post('keterangan_sisa'),
                     'surat' => null,
                     'tgl_upload' => $this->input->post('date'),
                 );

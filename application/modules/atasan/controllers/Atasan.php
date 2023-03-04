@@ -437,6 +437,7 @@ class Atasan extends CI_Controller
         $nik = $this->input->post('nik');
         $sisa = $this->input->post('sisa');
         $tgl_masuk = $this->input->post('masuk');
+        $status_profil = $this->input->post('status_profil');
         $data = [
             'status' => $this->input->post('status'),
             'tgl_cuti' => $this->input->post('cuti'),
@@ -445,7 +446,7 @@ class Atasan extends CI_Controller
         $this->db->where('id', $id);
         $this->db->update('tbl_cuti', $data);
         $this->session->set_flashdata('flash', '<div class="alert alert-success" role="alert">Data Telah Berhasil Di Edit</div>');
-        $this->editprofilstatus($nik, $sisa, $tgl_masuk);
+        $this->editprofilstatus($nik, $sisa, $tgl_masuk, $status_profil);
     }
 
     public function edit_persetujuanatas($id)
@@ -453,6 +454,7 @@ class Atasan extends CI_Controller
         $nikatas = $this->input->post('nikatas');
         $sisaatas = $this->input->post('sisaatas');
         $tgl_masukatas = $this->input->post('masuk');
+        $status_profilatas = $this->input->post('status_profilatas');
         $data = [
             'status' => $this->input->post('statusx'),
             'tgl_cuti' => $this->input->post('cuti'),
@@ -461,7 +463,7 @@ class Atasan extends CI_Controller
         $this->db->where('id', $id);
         $this->db->update('tbl_cuti', $data);
         $this->session->set_flashdata('flash', '<div class="alert alert-success" role="alert">Data Telah Berhasil Di Edit</div>');
-        $this->editprofilstatusatas($nikatas, $sisaatas, $tgl_masukatas);
+        $this->editprofilstatusatas($nikatas, $sisaatas, $tgl_masukatas, $status_profilatas);
     }
 
     public function edit_ijin($id)
@@ -475,11 +477,11 @@ class Atasan extends CI_Controller
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-    public function editprofilstatus($nik, $sisa, $tgl_masuk)
+    public function editprofilstatus($nik, $sisa, $tgl_masuk, $status_profil)
     {
         $data = [
             'sisa_cuti' => $sisa,
-            'status' => $this->input->post('status_profilatas'),
+            'status' => $status_profil,
             'tgl_masuk' => $tgl_masuk
         ];
         $this->db->where('nik', $nik);
@@ -488,11 +490,11 @@ class Atasan extends CI_Controller
         redirect($_SERVER['HTTP_REFERER']);
     }
 
-    public function editprofilstatusatas($nikatas, $sisaatas, $tgl_masukatas)
+    public function editprofilstatusatas($nikatas, $sisaatas, $tgl_masukatas, $status_profilatas)
     {
         $data = [
             'sisa_cuti' => $sisaatas,
-            'status' => $this->input->post('status_profilatas'),
+            'status' => $status_profilatas,
             'tgl_masuk' => $tgl_masukatas
         ];
         $this->db->where('nik', $nikatas);
@@ -957,6 +959,9 @@ class Atasan extends CI_Controller
                         'status' => $this->input->post('status'),
                         'atasan' => $this->input->post('atasan'),
                         'jumlah_cuti' => $this->input->post('sisa'),
+                        'sisa_cuti' => $this->input->post('sisa_cuti'),
+                        'tahun_sisa' => $this->input->post('tahun_sisa'),
+                        'keterangan_sisa' => $this->input->post('keterangan_sisa'),
                         'surat' => $this->surat->data("file_name"),
                         'tgl_upload' => $this->input->post('date'),
                     );
@@ -980,6 +985,9 @@ class Atasan extends CI_Controller
                     'status' => $this->input->post('status'),
                     'atasan' => $this->input->post('atasan'),
                     'jumlah_cuti' => $this->input->post('sisa'),
+                    'sisa_cuti' => $this->input->post('sisa_cuti'),
+                    'tahun_sisa' => $this->input->post('tahun_sisa'),
+                    'keterangan_sisa' => $this->input->post('keterangan_sisa'),
                     'surat' => null,
                     'tgl_upload' => $this->input->post('date'),
                 );

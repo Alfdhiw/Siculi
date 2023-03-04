@@ -162,7 +162,23 @@
             <br>
             <table>
                 <tr>
-                    <td colspan="4">V. ALAMAT SELAMA MENJALANKAN CUTI</td>
+                    <td colspan="3">V. CATATAN CUTI</td>
+                </tr>
+                <tr>
+                    <td>Tahun</td>
+                    <td>Sisa</td>
+                    <td>Keterangan</td>
+                </tr>
+                <tr>
+                    <td><?= $datacuti['tahun_sisa'] ?></td>
+                    <td><?= $datacuti['sisa_cuti'] ?></td>
+                    <td><?= $datacuti['keterangan_sisa'] ?></td>
+                </tr>
+            </table>
+            <br>
+            <table>
+                <tr>
+                    <td colspan="4">VI. ALAMAT SELAMA MENJALANKAN CUTI</td>
                 </tr>
                 <tr>
                     <td rowspan="2"><?= $datacuti['alamat'] ?></td>
@@ -176,7 +192,7 @@
             <br>
             <table>
                 <tr>
-                    <td colspan="3">VI. PERTIMBANGAN ATASAN LANGSUNG</td>
+                    <td colspan="3">VII. PERTIMBANGAN ATASAN LANGSUNG</td>
                 </tr>
                 <tr>
                     <td>Disetujui</td>
@@ -215,7 +231,7 @@
             <br>
             <table>
                 <tr>
-                    <td colspan="3">VII. PERTIMBANGAN KETUA</td>
+                    <td colspan="3">VIII. PERTIMBANGAN KETUA</td>
                 </tr>
                 <tr>
                     <td>Disetujui</td>
