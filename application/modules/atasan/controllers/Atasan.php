@@ -905,7 +905,7 @@ class Atasan extends CI_Controller
         $id = $this->session->userdata('userid');
         $this->db->set('status', $this->input->post('status'));
         $this->db->set('tgl_masuk', $this->input->post('tgl_masuk'));
-        $this->db->where('id', $id);
+        $this->db->where('kd_atasan', $id);
         $this->db->update('tbl_atasan');
         $this->session->set_flashdata('success', 'Anda telah aktif kembali');
         redirect($_SERVER['HTTP_REFERER']);
@@ -960,7 +960,6 @@ class Atasan extends CI_Controller
                         'atasan' => $this->input->post('atasan'),
                         'jumlah_cuti' => $this->input->post('sisa'),
                         'sisa_cuti' => $this->input->post('sisa_cuti'),
-                        'tahun_sisa' => $this->input->post('tahun_sisa'),
                         'keterangan_sisa' => $this->input->post('keterangan_sisa'),
                         'surat' => $this->surat->data("file_name"),
                         'tgl_upload' => $this->input->post('date'),
@@ -986,7 +985,6 @@ class Atasan extends CI_Controller
                     'atasan' => $this->input->post('atasan'),
                     'jumlah_cuti' => $this->input->post('sisa'),
                     'sisa_cuti' => $this->input->post('sisa_cuti'),
-                    'tahun_sisa' => $this->input->post('tahun_sisa'),
                     'keterangan_sisa' => $this->input->post('keterangan_sisa'),
                     'surat' => null,
                     'tgl_upload' => $this->input->post('date'),

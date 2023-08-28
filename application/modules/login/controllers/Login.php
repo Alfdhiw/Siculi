@@ -50,7 +50,7 @@ class Login extends CI_Controller
                     $data = $query->row();
 
                     if ($data->id_role == 1) {
-                        if ($data->status == 0) {
+                        if ($data->status == 'Tidak Aktif') {
                             $this->session->set_flashdata('message', '<div class="alert alert-danger" style="color:red;" role="alert">' . 'Akun anda belum aktif. Silahkan menunggu' . '</div>');
                             redirect('login');
                         } elseif ($data->status == 'Aktif') {
@@ -67,10 +67,10 @@ class Login extends CI_Controller
                             redirect('login');
                         }
                     } elseif ($data->id_role == 2) {
-                        if ($data->status == 0) {
+                        if ($data->status == 'Tidak Aktif') {
                             $this->session->set_flashdata('message', '<div class="alert alert-danger" style="color:red;" role="alert">' . 'Akun anda belum aktif. Silahkan menunggu' . '</div>');
                             redirect('login');
-                        } elseif ($data->status != 'Tidak Aktif') {
+                        } elseif ($data->status == 'Aktif') {
 
                             $this->CI->session->set_userdata('userid', $data->kode);
                             $this->CI->session->set_userdata('nama', $data->nama);
@@ -84,10 +84,10 @@ class Login extends CI_Controller
                             redirect('login');
                         }
                     } elseif ($data->id_role == 3) {
-                        if ($data->status == 0) {
+                        if ($data->status == 'Tidak Aktif') {
                             $this->session->set_flashdata('message', '<div class="alert alert-danger" style="color:red;" role="alert">' . 'Akun anda terkena blokir. Silahkan hubungi Admin!' . '</div>');
                             redirect('login');
-                        } elseif ($data->status != 'Tidak Aktif') {
+                        } elseif ($data->status == 'Aktif') {
                             $this->CI->session->set_userdata('userid', $data->kode);
                             $this->CI->session->set_userdata('nik', $data->nik);
                             $this->CI->session->set_userdata('nama', $data->nama);
@@ -102,10 +102,10 @@ class Login extends CI_Controller
                         }
                     } elseif ($data->id_role == 4) {
 
-                        if ($data->status == 0) {
+                        if ($data->status == 'Tidak Aktif') {
                             $this->session->set_flashdata('message', '<div class="alert alert-danger" style="color:red;" role="alert">' . 'Akun anda belum aktif. Silahkan menunggu' . '</div>');
                             redirect('login');
-                        } elseif ($data->status != 'Tidak Aktif') {
+                        } elseif ($data->status == 'Aktif') {
 
                             $this->CI->session->set_userdata('userid', $data->kode);
                             $this->CI->session->set_userdata('nama', $data->nama);
@@ -120,10 +120,10 @@ class Login extends CI_Controller
                         }
                     } elseif ($data->id_role == 5) {
 
-                        if ($data->status == 0) {
+                        if ($data->status == 'Tidak Aktif') {
                             $this->session->set_flashdata('message', '<div class="alert alert-danger" style="color:red;" role="alert">' . 'Akun anda belum aktif. Silahkan menunggu' . '</div>');
                             redirect('login');
-                        } elseif ($data->status != 'Tidak Aktif') {
+                        } elseif ($data->status == 'Aktif') {
 
                             $this->CI->session->set_userdata('userid', $data->kode);
                             $this->CI->session->set_userdata('nama', $data->nama);

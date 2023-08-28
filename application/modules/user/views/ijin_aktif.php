@@ -51,7 +51,7 @@
                 </div>
                 <input type="hidden" name="id_karyawan" value="<?= $userid ?>">
                 <input type="hidden" name="atasan" value="<?= $user['atasan'] ?>">
-                <input type="text" name="sisa" value="<?= $user['sisa_cuti'] ?>">
+                <input type="hidden" name="sisa" value="<?= $user['sisa_cuti'] ?>">
                 <input type="hidden" name="proses" value="Proses">
                 <input type="hidden" name="id" value="<?= $user['id'] ?>">
                 <input type="hidden" name="status" value="Proses">
@@ -59,10 +59,6 @@
                                                         date("Y-m-d");
                                                         echo date("Y-m-d");
                                                         ?>">
-                <input type="hidden" name="tahun_sisa" value="<?php
-                                                                date("Y");
-                                                                echo date("Y");
-                                                                ?>">
                 <?php
                 if ($user['sisa_cuti'] == 0) {
                     echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#submitModal" >Submit</button>

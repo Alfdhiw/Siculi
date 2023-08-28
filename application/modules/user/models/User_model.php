@@ -110,7 +110,7 @@ class User_model extends CI_Model
 
     public function getAllCutiById($id)
     {
-        $query = "SELECT k.nama, k.nik, c.alamat, k.masuk_kerja, k.telp, k.jabatan,k.golongan, p.nama as nama_atasan, p.nik as nik_atasan,k.sisa_cuti, c.id as id_cuti, c.jenis_cuti, c.tgl_cuti, c.tgl_masuk, c.keperluan, c.status, c.sisa_cuti, c.tahun_sisa, c.keterangan_sisa from tbl_karyawan k, tbl_atasan p, tbl_cuti c where k.id = c.id_karyawan and k.atasan = p.kd_atasan and c.id = $id";
+        $query = "SELECT k.nama, k.nik, c.alamat, k.masuk_kerja, k.telp, k.jabatan,k.golongan, p.nama as nama_atasan, p.nik as nik_atasan,k.sisa_cuti, c.id as id_cuti, c.jenis_cuti, c.tgl_cuti, c.tgl_masuk, c.keperluan, c.status, c.sisa_cuti, c.keterangan_sisa from tbl_karyawan k, tbl_atasan p, tbl_cuti c where k.id = c.id_karyawan and k.atasan = p.kd_atasan and c.id = $id";
         return $this->db->query($query)->row_array();
     }
 

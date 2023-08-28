@@ -59,10 +59,6 @@
                                                         date("Y-m-d");
                                                         echo date("Y-m-d");
                                                         ?>">
-                <input type="hidden" name="tahun_sisa" value="<?php
-                                                                date("Y");
-                                                                echo date("Y");
-                                                                ?>">
                 <?php
                 if ($user['sisa_cuti'] == 0) {
                     echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#submitModal" >Submit</button>

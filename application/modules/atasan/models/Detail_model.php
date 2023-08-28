@@ -68,7 +68,7 @@ class Detail_model extends CI_Model
 
     public function getAllCutiById($id)
     {
-        $query = "SELECT a.nama, a.nik, c.alamat, a.masuk_kerja, a.telp, a.jabatan,a.golongan, a.atasan, a.sisa_cuti, c.id as id_cuti, c.jenis_cuti, c.tgl_cuti, c.tgl_masuk, c.keperluan, c.status, c.sisa_cuti, c.tahun_sisa, c.keterangan_sisa from tbl_atasan a, tbl_cuti c where a.kd_atasan = c.id_karyawan and c.id = $id";
+        $query = "SELECT a.nama, a.nik, c.alamat, a.masuk_kerja, a.telp, a.jabatan,a.golongan, a.atasan, a.sisa_cuti, c.id as id_cuti, c.jenis_cuti, c.tgl_cuti, c.tgl_masuk, c.keperluan, c.status, c.sisa_cuti, c.keterangan_sisa from tbl_atasan a, tbl_cuti c where a.kd_atasan = c.id_karyawan and c.id = $id";
         return $this->db->query($query)->row_array();
     }
 

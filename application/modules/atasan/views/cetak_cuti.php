@@ -170,7 +170,17 @@
                     <td>Keterangan</td>
                 </tr>
                 <tr>
-                    <td><?= $datacuti['tahun_sisa'] ?></td>
+                    <td>2021</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2022</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2023</td>
                     <td><?= $datacuti['sisa_cuti'] ?></td>
                     <td><?= $datacuti['keterangan_sisa'] ?></td>
                 </tr>

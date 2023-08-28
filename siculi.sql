@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 06, 2023 at 11:06 AM
+-- Generation Time: Apr 10, 2023 at 02:34 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.15
 
@@ -127,16 +127,20 @@ CREATE TABLE `tbl_cuti` (
   `status` varchar(50) NOT NULL DEFAULT '0',
   `tgl_masuk` date NOT NULL,
   `surat` varchar(120) DEFAULT NULL,
-  `tgl_upload` date DEFAULT NULL
+  `tgl_upload` date DEFAULT NULL,
+  `sisa_cuti` int(11) NOT NULL,
+  `keterangan_sisa` varchar(120) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_cuti`
 --
 
-INSERT INTO `tbl_cuti` (`id`, `id_karyawan`, `atasan`, `tgl_cuti`, `jenis_cuti`, `jumlah_cuti`, `keperluan`, `alamat`, `status`, `tgl_masuk`, `surat`, `tgl_upload`) VALUES
-(67, 16, 1, '2023-02-05', 'Cuti Khusus', '12', 'tes', 'tes', 'Disetujui', '2023-02-06', NULL, '2023-02-05'),
-(69, 6, 2, '2023-02-06', 'Cuti Khusus', '12', 'libur dulu ', 'lamper tengah', 'Ditangguhkan', '2023-02-10', NULL, '2023-02-06');
+INSERT INTO `tbl_cuti` (`id`, `id_karyawan`, `atasan`, `tgl_cuti`, `jenis_cuti`, `jumlah_cuti`, `keperluan`, `alamat`, `status`, `tgl_masuk`, `surat`, `tgl_upload`, `sisa_cuti`, `keterangan_sisa`) VALUES
+(67, 16, 1, '2023-02-05', 'Cuti Khusus', '12', 'tes', 'tes', 'Disetujui', '2023-02-06', NULL, '2023-02-05', 5, ''),
+(69, 6, 2, '2023-02-06', 'Cuti Khusus', '12', 'libur dulu ', 'lamper tengah', 'Ditangguhkan', '2023-02-10', NULL, '2023-02-06', 3, ''),
+(71, 16, 1, '2023-03-04', 'Cuti Tahunan', '11', 'liburan keluarga', 'jl.tes', 'Disetujui', '2023-03-10', NULL, '2023-03-04', 5, ''),
+(73, 1, 2, '2023-03-04', 'Cuti Tahunan', '12', 'atasan ', 'jl.atasan', 'Disetujui', '2023-03-31', NULL, '2023-03-04', 8, 'sipp');
 
 -- --------------------------------------------------------
 
@@ -295,7 +299,7 @@ CREATE TABLE `tbl_karyawan` (
 --
 
 INSERT INTO `tbl_karyawan` (`id`, `nik`, `nama`, `id_role`, `foto`, `masuk_kerja`, `jenis_kelamin`, `email`, `password`, `alamat`, `telp`, `atasan`, `jabatan`, `golongan`, `sisa_cuti`, `tgl_masuk`, `status`) VALUES
-(16, '1234567890', 'tes1', 3, '230205-selfi.jpeg', '2020-02-05', 'L', 'tes@gmail.com', '12345', 'lamper', '123456789', 1, 'KASUBBAG KEPEGAWAIAN DAN ORTALA PENGADILAN NEGERI SEMARANG', 'III B', 11, '0000-00-00', 'Aktif');
+(16, '1234567890', 'tes1', 3, '230205-selfi.jpeg', '2020-02-05', 'L', 'tes@gmail.com', '12345', 'lamper', '123456789', 1, 'KASUBBAG KEPEGAWAIAN DAN ORTALA PENGADILAN NEGERI SEMARANG', 'III B', 10, NULL, 'Aktif');
 
 -- --------------------------------------------------------
 
@@ -459,7 +463,7 @@ ALTER TABLE `tbl_atasan`
 -- AUTO_INCREMENT for table `tbl_cuti`
 --
 ALTER TABLE `tbl_cuti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `tbl_departement`
